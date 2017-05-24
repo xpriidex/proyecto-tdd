@@ -36,7 +36,17 @@ public class BorrowerServiceImplTest {
         borrowers.add(new Borrower("31","add","991","sas@a"));
 
         when(borrowerDao.getAll()).thenReturn(borrowers);
-        resp= (LinkedList<Borrower>) borrowerService.getAll();
+        resp=(LinkedList<Borrower>)borrowerService.getAll();
         assertEquals(3,resp.size());
+    }
+
+    @Test
+    public void WhenNotBorrowerExistGetAllShoultReturnEmptyList(){
+        LinkedList<Borrower> result;
+        LinkedList<Borrower> borrowers = new LinkedList<>();
+        when(borrowerDao.getAll()).thenReturn(borrowers);
+        result=(LinkedList<Borrower>)borrowerService.getAll();
+        assertEquals(0,result.size());
+
     }
 }
