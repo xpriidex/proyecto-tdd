@@ -22,5 +22,7 @@ public interface TitleDao {
 
     public List<Title> getAll();
 
+    public List<Title> getBySubject();
+
     public boolean exist(String id);
 }
