@@ -1,6 +1,6 @@
 package cl.ubb.service;
 
-import cl.ubb.dao.BorrowerDao;
+import cl.ubb.dao.daoImpl.BorrowerDao;
 import cl.ubb.model.Borrower;
 
 import java.util.List;

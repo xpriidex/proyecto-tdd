@@ -1,6 +1,6 @@
 package cl.ubb.service.impl;
 
-import cl.ubb.dao.BorrowerDao;
+import cl.ubb.dao.daoImpl.BorrowerDao;
 import cl.ubb.model.Borrower;
 import cl.ubb.service.BorrowerService;
 import org.junit.Test;

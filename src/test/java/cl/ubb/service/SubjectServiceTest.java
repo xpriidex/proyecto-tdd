@@ -1,7 +1,7 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.exceptions.EmptyListException;
-import cl.ubb.dao.SubjectDao;
+import cl.ubb.dao.daoImpl.SubjectDao;
 import cl.ubb.model.Subject;
 import org.junit.Test;
 import org.junit.runner.RunWith;

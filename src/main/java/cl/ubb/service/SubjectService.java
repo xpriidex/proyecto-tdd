@@ -1,6 +1,6 @@
 package cl.ubb.service;
 
-import cl.ubb.dao.SubjectDao;
+import cl.ubb.dao.daoImpl.SubjectDao;
 import cl.ubb.dao.exceptions.EmptyListException;
 import cl.ubb.model.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
