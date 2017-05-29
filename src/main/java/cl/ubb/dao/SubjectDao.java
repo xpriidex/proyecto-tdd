@@ -17,11 +17,11 @@ public interface SubjectDao {
 
     public void update(Subject subject)throws UpdateException;
 
-    public Subject delete(String id)throws DeleteException;
+    public Subject delete(long id)throws DeleteException;
 
-    public Subject get (String id);
+    public Subject get (long id);
 
     public List<Subject>getAll();
 
-    public boolean exist(String id);
+    public boolean exist(long id);
 }

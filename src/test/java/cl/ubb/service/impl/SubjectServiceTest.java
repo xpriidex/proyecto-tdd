@@ -1,18 +1,23 @@
-package cl.ubb.service;
+package cl.ubb.service.impl;
 
 import cl.ubb.dao.exceptions.EmptyListException;
-import cl.ubb.dao.daoImpl.SubjectDao;
+import cl.ubb.dao.daoImpl.SubjectDaoImpl;
 import cl.ubb.model.Subject;
+import cl.ubb.service.SubjectService;
+import cl.ubb.service.exceptions.DeleteException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.xml.ws.Service;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -20,8 +25,16 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SubjectServiceTest {
+    private Subject subject;
+
+    @Before
+    public void setUp() throws Exception {
+        subject = new Subject();
+        subject.setIdentifier(1);
+    }
+
     @Mock
-    private SubjectDao subjectDao;
+    private SubjectDaoImpl subjectDao;
 
     @InjectMocks
     private SubjectService subjectService;
@@ -49,12 +62,22 @@ public class SubjectServiceTest {
     @Test
     public void whendoIsCalledAndThereIsASubjectWhitAnIdGivenShouldReturnTheNameOfSubject(){
         String resp;
-        when(subjectDao.getName(12345)).thenReturn("Literatura Siglo XIX");
+        when(subjectDao.get(12345)).thenReturn(subject);
 
-        resp=subjectService.getName(12345);
+        when(subjectService.getName(1)).thenReturn("Literatura Siglo XIX");
+
+        resp=subjectService.getName(1);
         assertEquals("Literatura Siglo XIX",resp);
 
     }
+
+    @Test
+    public void whenDeleteSubjectOneReturnSubjectOne() throws DeleteException {
+        subjectService.delete(1);
+        verify(subjectDao).delete(1);
+    }
+
+
 
 
 }

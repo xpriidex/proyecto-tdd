@@ -1,8 +1,9 @@
 package cl.ubb.service;
 
-import cl.ubb.dao.daoImpl.SubjectDao;
+import cl.ubb.dao.daoImpl.SubjectDaoImpl;
 import cl.ubb.dao.exceptions.EmptyListException;
 import cl.ubb.model.Subject;
+import cl.ubb.service.exceptions.DeleteException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class SubjectService {
     @Autowired
-    private SubjectDao subjectDao;
+    private SubjectDaoImpl subjectDao;
     public LinkedList<Subject> getAll() throws EmptyListException{
         List<Subject> subjects = (List<Subject>) subjectDao.getAll();
         if(subjects.size()==0){
@@ -22,7 +23,11 @@ public class SubjectService {
         return (LinkedList<Subject>) subjectDao.getAll();
     }
 
-    public String getName(int id) {
-        return subjectDao.getName(id);
+    public String getName(long id) {
+        return subjectDao.get(id).getName();
+    }
+
+    public Subject delete(long i) throws DeleteException {
+        return subjectDao.delete(i);
     }
 }

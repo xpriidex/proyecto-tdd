@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Felipe Cifuentes on 24-05-2017.
  */
-public class BorrowerDao {
+public class BorrowerDaoImpl {
     public void create(Borrower borrower) throws CreateException {
 
     }
