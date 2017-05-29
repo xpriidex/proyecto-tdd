@@ -24,12 +24,20 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SubjectServiceTest {
-    private Subject subject;
+    private Subject subject,subject2,subject3;
 
     @Before
     public void setUp() throws Exception {
         subject = new Subject();
-        subject.setIdentifier("1");
+        subject2 = new Subject();
+        subject3 = new Subject();
+
+        subject.setIdentifier("1001");
+        subject.setName("Robin Hood");
+        subject2.setIdentifier("2001");
+        subject2.setName("Nutricion");
+        subject3.setIdentifier("1003");
+        subject3.setName("Rimas y Leyendas");
     }
 
     @Mock
@@ -78,6 +86,24 @@ public class SubjectServiceTest {
 
     @Test
     public void whenGetAllSubjects(){
-        
+        List <Subject> result= new LinkedList<>();
+        List<Subject>subjects=new LinkedList<>();
+        subjects.add(subject);
+        subjects.add(subject2);
+        subjects.add(subject3);
+        when(subjectDao.getAll()).thenReturn(subjects);
+
+        result = subjectDao.getAll();
+
+        assertEquals(result, subjects);
+        assertEquals("1001",result.get(0).getIdentifier());
+        assertEquals("2001",result.get(1).getIdentifier());
+        assertEquals("1003",result.get(2).getIdentifier());
+        assertEquals("Robin Hood",result.get(0).getName());
+        assertEquals("Nutricion",result.get(1).getName());
+        assertEquals("Rimas y Leyendas",result.get(2).getName());
+
+
+
     }
 }
