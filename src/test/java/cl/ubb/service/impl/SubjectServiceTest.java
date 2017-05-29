@@ -85,7 +85,7 @@ public class SubjectServiceTest {
     }
 
     @Test
-    public void whenGetAllSubjects(){
+    public void whenGetAllSubjects() throws EmptyListException {
         List <Subject> result= new LinkedList<>();
         List<Subject>subjects=new LinkedList<>();
         subjects.add(subject);
@@ -93,7 +93,7 @@ public class SubjectServiceTest {
         subjects.add(subject3);
         when(subjectDao.getAll()).thenReturn(subjects);
 
-        result = subjectDao.getAll();
+        result = subjectService.getAll();
 
         assertEquals(result, subjects);
         assertEquals("1001",result.get(0).getIdentifier());
@@ -106,4 +106,13 @@ public class SubjectServiceTest {
 
 
     }
+    @Test(expected = EmptyListException.class)
+    public void whenGetAllSubjectsEmptyList() throws EmptyListException {
+        List<Subject>subjects=new LinkedList<>();
+        when(subjectDao.getAll()).thenReturn(subjects);
+
+        subjectService.getAll();
+
+    }
+
 }
