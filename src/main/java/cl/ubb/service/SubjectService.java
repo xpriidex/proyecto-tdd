@@ -4,6 +4,7 @@ import cl.ubb.dao.SubjectDao;
 import cl.ubb.dao.exceptions.EmptyListException;
 import cl.ubb.model.Subject;
 import cl.ubb.service.exceptions.DeleteException;
+import cl.ubb.service.exceptions.ReadErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
@@ -31,4 +32,13 @@ public class SubjectService {
         return subjectDao.delete(i);
     }
 
+    public Subject get(String id) throws ReadErrorException {
+        Subject result;
+        result= subjectDao.get(id);
+
+        if(result== null){
+            throw new ReadErrorException();
+        }
+        return result;
+    }
 }

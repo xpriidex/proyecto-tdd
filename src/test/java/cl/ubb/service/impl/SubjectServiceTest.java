@@ -5,6 +5,7 @@ import cl.ubb.dao.exceptions.EmptyListException;
 import cl.ubb.model.Subject;
 import cl.ubb.service.SubjectService;
 import cl.ubb.service.exceptions.DeleteException;
+import cl.ubb.service.exceptions.ReadErrorException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,13 +25,15 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SubjectServiceTest {
-    private Subject subject,subject2,subject3;
+    private Subject subject,subject2,subject3,subject4,subject5;
 
     @Before
     public void setUp() throws Exception {
         subject = new Subject();
         subject2 = new Subject();
         subject3 = new Subject();
+        subject4 = new Subject();
+        subject5 = new Subject();
 
         subject.setIdentifier("1001");
         subject.setName("Robin Hood");
@@ -38,6 +41,11 @@ public class SubjectServiceTest {
         subject2.setName("Nutricion");
         subject3.setIdentifier("1003");
         subject3.setName("Rimas y Leyendas");
+        subject4.setIdentifier("101");
+        subject4.setName("Literatura Del Siglo XIX");
+        subject5.setIdentifier("202");
+        subject5.setName("Ingenieria De Software");
+
     }
 
     @Mock
@@ -112,6 +120,29 @@ public class SubjectServiceTest {
         when(subjectDao.getAll()).thenReturn(subjects);
 
         subjectService.getAll();
+
+    }
+    @Test
+    public void whenGetSubjectIdIs101ReturnLiteraturaDelSigloXIX() throws ReadErrorException {
+        Subject result = new Subject();
+        when(subjectDao.get("101")).thenReturn(subject4);
+
+        result = subjectService.get("101");
+
+        assertEquals("101",result.getIdentifier());
+        assertEquals("Literatura Del Siglo XIX",result.getName());
+
+
+    }
+
+    @Test(expected = ReadErrorException.class)
+    public void whenGetSubjectIdIs202ReturnIngenieriaDeSoftware() throws ReadErrorException {
+        Subject result = new Subject();
+        when(subjectDao.get("102")).thenReturn(null);
+
+        result = subjectService.get("102");
+
+
 
     }
 
