@@ -1,7 +1,7 @@
 package cl.ubb.service.impl;
 
+import cl.ubb.dao.SubjectDao;
 import cl.ubb.dao.exceptions.EmptyListException;
-import cl.ubb.dao.daoImpl.SubjectDaoImpl;
 import cl.ubb.model.Subject;
 import cl.ubb.service.SubjectService;
 import cl.ubb.service.exceptions.DeleteException;
@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.xml.ws.Service;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,11 +29,11 @@ public class SubjectServiceTest {
     @Before
     public void setUp() throws Exception {
         subject = new Subject();
-        subject.setIdentifier(1);
+        subject.setIdentifier("1");
     }
 
     @Mock
-    private SubjectDaoImpl subjectDao;
+    private SubjectDao subjectDao;
 
     @InjectMocks
     private SubjectService subjectService;
@@ -43,7 +42,7 @@ public class SubjectServiceTest {
     public void whengerAllCalledAmdThereAreSubjectsAllOfThenShouldBeReturnedInAList() throws EmptyListException {
         LinkedList <Subject> resp;
         LinkedList <Subject> subjects = new LinkedList<Subject>();
-        subjects.add(new Subject((long)12345,"Literatura Siglo XIX"));
+        subjects.add(new Subject("12345","Literatura Siglo XIX"));
         when(subjectDao.getAll()).thenReturn(subjects);
 
         resp = subjectService.getAll();
@@ -62,22 +61,23 @@ public class SubjectServiceTest {
     @Test
     public void whendoIsCalledAndThereIsASubjectWhitAnIdGivenShouldReturnTheNameOfSubject(){
         String resp;
-        when(subjectDao.get(12345)).thenReturn(subject);
+        when(subjectDao.get("12345")).thenReturn(subject);
 
-        when(subjectService.getName(1)).thenReturn("Literatura Siglo XIX");
+        when(subjectService.getName("1")).thenReturn("Literatura Siglo XIX");
 
-        resp=subjectService.getName(1);
+        resp=subjectService.getName("1");
         assertEquals("Literatura Siglo XIX",resp);
 
     }
 
     @Test
     public void whenDeleteSubjectOneReturnSubjectOne() throws DeleteException {
-        subjectService.delete(1);
-        verify(subjectDao).delete(1);
+        subjectService.delete("1");
+        verify(subjectDao).delete("1");
     }
 
-
-
-
+    @Test
+    public void whenGetAllSubjects(){
+        
+    }
 }

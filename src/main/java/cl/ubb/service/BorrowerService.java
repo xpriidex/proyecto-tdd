@@ -1,6 +1,6 @@
 package cl.ubb.service;
 
-import cl.ubb.dao.daoImpl.BorrowerDaoImpl;
+import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BorrowerService {
 
-    private BorrowerDaoImpl borrowerDao;
+    private BorrowerDao borrowerDao;
     public List<Borrower> getAll() {
 
         return borrowerDao.getAll();

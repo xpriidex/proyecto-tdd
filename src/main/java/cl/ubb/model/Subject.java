@@ -5,22 +5,22 @@ package cl.ubb.model;
  */
 public class Subject {
 
-    private long identifier;
+    private String identifier;
     private String name;
 
     public Subject() {
     }
 
-    public Subject(long identifier, String name) {
+    public Subject(String identifier, String name) {
         this.identifier = identifier;
         this.name = name;
     }
 
-    public long getIdentifier() {
+    public String getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(long identifier) {
+    public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
 
@@ -39,13 +39,13 @@ public class Subject {
 
         Subject subject = (Subject) o;
 
-        if (identifier != subject.identifier) return false;
+        if (identifier != null ? !identifier.equals(subject.identifier) : subject.identifier != null) return false;
         return name != null ? name.equals(subject.name) : subject.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (identifier ^ (identifier >>> 32));
+        int result = identifier != null ? identifier.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

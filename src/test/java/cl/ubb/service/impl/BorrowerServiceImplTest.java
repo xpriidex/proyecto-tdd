@@ -1,6 +1,6 @@
 package cl.ubb.service.impl;
 
-import cl.ubb.dao.daoImpl.BorrowerDaoImpl;
+import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
 import cl.ubb.service.BorrowerService;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class BorrowerServiceImplTest {
 
     @Mock
-    private BorrowerDaoImpl borrowerDao;
+    private BorrowerDao borrowerDao;
 
     @InjectMocks
     private BorrowerService borrowerService;

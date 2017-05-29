@@ -4,7 +4,6 @@ import cl.ubb.model.Subject;
 import cl.ubb.service.exceptions.CreateException;
 import cl.ubb.service.exceptions.DeleteException;
 import cl.ubb.service.exceptions.UpdateException;
-import org.hibernate.sql.Update;
 
 import java.util.List;
 
@@ -17,11 +16,11 @@ public interface SubjectDao {
 
     public void update(Subject subject)throws UpdateException;
 
-    public Subject delete(long id)throws DeleteException;
+    public Subject delete(String id)throws DeleteException;
 
-    public Subject get (long id);
+    public Subject get (String id);
 
     public List<Subject>getAll();
 
-    public boolean exist(long id);
+    public boolean exist(String id);
 }
