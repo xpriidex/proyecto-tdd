@@ -1,8 +1,7 @@
-package cl.ubb.service.impl;
+package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
-import cl.ubb.service.BorrowerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
