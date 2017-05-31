@@ -1,4 +1,4 @@
-package cl.ubb.service.exceptions;
+package cl.ubb.dao.exceptions;
 
 /**
  * Created by Felipe Cifuentes on 22-05-2017.

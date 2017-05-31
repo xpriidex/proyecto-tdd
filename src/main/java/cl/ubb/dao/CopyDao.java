@@ -1,9 +1,9 @@
 package cl.ubb.dao;
 
 import cl.ubb.model.Copy;
-import cl.ubb.service.exceptions.CreateException;
-import cl.ubb.service.exceptions.DeleteException;
-import cl.ubb.service.exceptions.UpdateException;
+import cl.ubb.dao.exceptions.CreateException;
+import cl.ubb.dao.exceptions.DeleteException;
+import cl.ubb.dao.exceptions.UpdateException;
 
 import java.util.List;
 

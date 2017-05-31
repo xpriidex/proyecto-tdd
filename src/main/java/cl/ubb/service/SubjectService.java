@@ -1,10 +1,9 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.SubjectDao;
-import cl.ubb.dao.exceptions.EmptyListException;
 import cl.ubb.model.Subject;
-import cl.ubb.service.exceptions.DeleteException;
-import cl.ubb.service.exceptions.ReadErrorException;
+import cl.ubb.dao.exceptions.DeleteException;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;

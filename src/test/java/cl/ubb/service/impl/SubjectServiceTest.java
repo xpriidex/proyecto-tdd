@@ -1,11 +1,10 @@
 package cl.ubb.service.impl;
 
 import cl.ubb.dao.SubjectDao;
-import cl.ubb.dao.exceptions.EmptyListException;
 import cl.ubb.model.Subject;
 import cl.ubb.service.SubjectService;
-import cl.ubb.service.exceptions.DeleteException;
-import cl.ubb.service.exceptions.ReadErrorException;
+import cl.ubb.dao.exceptions.DeleteException;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
