@@ -21,4 +21,8 @@ public class SuspensionService {
 
         return result;
     }
+
+    public Suspension get(String id) {
+        return suspensionDao.get(id);
+    }
 }

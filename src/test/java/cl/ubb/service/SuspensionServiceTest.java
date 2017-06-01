@@ -69,7 +69,17 @@ public class SuspensionServiceTest {
         when(suspensionDao.getAll()).thenReturn(suspensions);
 
         result= suspensionDao.getAll();
-
     }
 
+    @Test
+    public void whenGetSuspensionIdIs1ReturnSuspensionId1AndDescriptionIsAtraso(){
+        Suspension result;
+
+        when(suspensionDao.get("1")).thenReturn(suspension1);
+
+        result = suspensionService.get("1");
+
+        assertEquals("atraso",result.getDescription());
+
+    }
 }
