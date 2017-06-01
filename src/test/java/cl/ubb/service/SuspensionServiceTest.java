@@ -73,7 +73,7 @@ public class SuspensionServiceTest {
     }
 
     @Test
-    public void whenGetSuspensionIdIs1ReturnSuspensionId1AndDescriptionIsAtraso(){
+    public void whenGetSuspensionIdIs1ReturnSuspensionId1AndDescriptionIsAtraso() throws ReadErrorException {
         Suspension result;
 
         when(suspensionDao.get("1")).thenReturn(suspension1);
@@ -85,7 +85,7 @@ public class SuspensionServiceTest {
     }
 
     @Test(expected = ReadErrorException.class)
-    public void whenGetSuspensionIdIs4ReturnReadException(){
+    public void whenGetSuspensionIdIs4ReturnReadException() throws ReadErrorException {
         Suspension result;
 
         when(suspensionDao.get("4")).thenReturn(null);

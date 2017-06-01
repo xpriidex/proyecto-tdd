@@ -1,6 +1,7 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.SuspensionDao;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Suspension;
 import cl.ubb.service.exceptions.EmptyListException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,13 @@ public class SuspensionService {
         return result;
     }
 
-    public Suspension get(String id) {
-        return suspensionDao.get(id);
+    public Suspension get(String id) throws ReadErrorException{
+        Suspension output = suspensionDao.get(id);
+        if(output==null){
+            throw new ReadErrorException();
+
+        }
+        return output;
+
     }
 }
