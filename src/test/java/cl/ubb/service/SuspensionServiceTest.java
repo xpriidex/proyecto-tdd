@@ -1,6 +1,7 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.SuspensionDao;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Borrower;
 import cl.ubb.model.Suspension;
 import cl.ubb.service.exceptions.EmptyListException;
@@ -80,6 +81,17 @@ public class SuspensionServiceTest {
         result = suspensionService.get("1");
 
         assertEquals("atraso",result.getDescription());
+
+    }
+
+    @Test(expected = ReadErrorException.class)
+    public void whenGetSuspensionIdIs4ReturnReadException(){
+        Suspension result;
+
+        when(suspensionDao.get("4")).thenReturn(null);
+
+        result = suspensionService.get("4");
+
 
     }
 }
