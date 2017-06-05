@@ -42,10 +42,11 @@ public class CopyService {
     public boolean exist(String id){
         return false;
     }
-    public List<Copy> getCopiesForTitle(String titleId)throws EmptyListException{
+   
+    public List<Copy> getAllAviableCopiesByTitleId(String id){
         return null;
     }
-    public boolean isCopyAviable(String id) throws ReadErrorException{
-        return false;
+    public Copy getCopyWithClosestDueOfTitleId(String id){
+        return null;
     }
 }
