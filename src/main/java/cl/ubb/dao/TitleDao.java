@@ -22,7 +22,7 @@ public interface TitleDao {
 
     public List<Title> getAll();
 
-    public List<Title> getBySubject();
+    public List<Title> getBySubject(String subjetcId);
 
     public boolean exist(String id);
 }
