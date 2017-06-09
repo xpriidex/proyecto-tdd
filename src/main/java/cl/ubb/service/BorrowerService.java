@@ -22,12 +22,15 @@ public class BorrowerService {
         return borrowerDao.getAll();
     }
     public boolean canBorrow(String rut, String date){
+        Boolean status;
+        String finishSuspension = date;
 
         LinkedList<Suspension> suspensions =new LinkedList<>();
         suspensions = (LinkedList<Suspension>) suspensionService.getAllSuspensionByRut(rut);
 
         if (suspensions.size()>=1)
-            return false;
+            if (finishSuspension==date)
+                return false;
 
         return true;
     }
