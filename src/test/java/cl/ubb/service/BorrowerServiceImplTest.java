@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
@@ -30,12 +31,15 @@ public class BorrowerServiceImplTest {
     private BorrowerDao borrowerDao;
     @Mock
     private SuspensionService suspensionService;
+    @Mock
+    private Calendar calendar;
 
     @InjectMocks
     private BorrowerService borrowerService;
 
     @Before
     public void setUp() throws Exception {
+        calendar.set(2017,05,10);
         borrower1 = new Borrower("2.222.222-2","ass","998","aasss@a");
         borrower2 = new Borrower("3.333.333-3","asd","999","aawws@a");
         borrower3 = new Borrower("31","add","991","sas@a");
@@ -47,6 +51,7 @@ public class BorrowerServiceImplTest {
 
         suspension1 = new Suspension();
         suspension1.setIdentifier("1");
+        suspension1.setStarDate("21-03-2017");
 
 
     }
@@ -97,10 +102,7 @@ public class BorrowerServiceImplTest {
 
         assertEquals(true,resp);
     }
-<<<<<<< HEAD
 
-    
-=======
     @Test
     public void whenVerifyCanBarrowerDateIsTheSameDayThatTheTermOfTheSuspensionThenReturnsFalse(){
         LinkedList <Suspension> suspensions = new LinkedList<>();
@@ -112,5 +114,15 @@ public class BorrowerServiceImplTest {
 
         assertEquals(false,resp);
     }
->>>>>>> 06b637d8c8cc036a13b2b6337732a95b4dce1c8a
+    @Test
+    public void VerifyCurrentDateOutsidePenaltyPeriodReturnsTrue(){
+        LinkedList <Suspension> suspensions = new LinkedList<>();
+        suspensions.add(suspension1);
+        when(suspensionService.getAllSuspensionByRut(borrower2.getRut())).thenReturn(suspensions);
+        Boolean resp;
+        resp = borrowerService.canBorrow(borrower2.getRut(),suspension1.getStarDate());
+
+        assertEquals(true,resp);
+
+    }
 }

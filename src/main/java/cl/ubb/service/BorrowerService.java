@@ -2,8 +2,15 @@ package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
+import cl.ubb.model.Suspension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,22 +26,53 @@ public class BorrowerService {
 
         return borrowerDao.getAll();
     }
-<<<<<<< HEAD
 
-=======
     public boolean canBorrow(String rut, String date){
         Boolean status;
         String finishSuspension = date;
 
-        LinkedList<Suspension> suspensions =new LinkedList<>();
+        LinkedList<Suspension> suspensions;
         suspensions = (LinkedList<Suspension>) suspensionService.getAllSuspensionByRut(rut);
 
-        if (suspensions.size()>=1)
-            if (finishSuspension==date)
-                return false;
+        Calendar startDate = Calendar.getInstance();
+        Calendar queryDate = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        boolean resp = true;
+        List <Suspension> suspensionsFiltered = new LinkedList<>();
+        for(Suspension s : suspensions){
+            if(s.getIdentifier().equals(rut)){
+                suspensionsFiltered.add(s);
+            }
+        }
+        for(Suspension s : suspensionsFiltered){
+            try {
+                Date start = (Date)dateFormat.parse(s.getStarDate());
+                Date query = (Date)dateFormat.parse(date);
+                startDate.setTime(start);
+                queryDate.setTime(query);
+                switch (s.getUnitOfTime()){
+                    case "Days":
+                        startDate.add(Calendar.DATE, new Integer(s.getUnitOfTime()));
+                        break;
+                    case "Months":
+                        startDate.add(Calendar.MONTH, new Integer(s.getUnitOfTime()));
+                        break;
+                    case "Years":
+                        startDate.add(Calendar.YEAR, new Integer(s.getUnitOfTime()));
+                        break;
+                }
+                if(queryDate.after(startDate)){
+                    resp = true;
+                }else{
+                    resp = false;
+                }
 
-        return true;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return resp;
     }
->>>>>>> 06b637d8c8cc036a13b2b6337732a95b4dce1c8a
 
 }
