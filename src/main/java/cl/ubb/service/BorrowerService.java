@@ -2,8 +2,10 @@ package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
+import cl.ubb.model.Suspension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,6 +22,13 @@ public class BorrowerService {
         return borrowerDao.getAll();
     }
     public boolean canBorrow(String rut, String date){
+
+        LinkedList<Suspension> suspensions =new LinkedList<>();
+        suspensions = (LinkedList<Suspension>) suspensionService.getAllSuspensionByRut(rut);
+
+        if (suspensions.size()>=1)
+            return false;
+
         return true;
     }
 

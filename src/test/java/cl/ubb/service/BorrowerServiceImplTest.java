@@ -75,5 +75,15 @@ public class BorrowerServiceImplTest {
         assertEquals(true,resp);
     }
 
+    @Test
+    public void whenVerifyCanBarrowerByRutReturnFalseBecauseHaveSuspension(){
+        LinkedList <Suspension> suspensions = new LinkedList<>();
+        suspensions.add(suspension1);
+        when(suspensionService.getAllSuspensionByRut(borrower1.getRut())).thenReturn(suspensions);
+        Boolean resp;
 
+        resp = borrowerService.canBorrow(borrower1.getRut(),"17-03-2017");
+
+        assertEquals(false,resp);
+    }
 }
