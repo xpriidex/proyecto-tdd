@@ -97,6 +97,20 @@ public class BorrowerServiceImplTest {
 
         assertEquals(true,resp);
     }
+<<<<<<< HEAD
 
     
+=======
+    @Test
+    public void whenVerifyCanBarrowerDateIsTheSameDayThatTheTermOfTheSuspensionThenReturnsFalse(){
+        LinkedList <Suspension> suspensions = new LinkedList<>();
+        suspensions.add(suspension1);
+        when(suspensionService.getAllSuspensionByRut(borrower2.getRut())).thenReturn(suspensions);
+        Boolean resp;
+
+        resp = borrowerService.canBorrow(borrower2.getRut(),"05-04-2017");
+
+        assertEquals(false,resp);
+    }
+>>>>>>> 06b637d8c8cc036a13b2b6337732a95b4dce1c8a
 }
