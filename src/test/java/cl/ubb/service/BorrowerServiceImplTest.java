@@ -37,7 +37,7 @@ public class BorrowerServiceImplTest {
     @Before
     public void setUp() throws Exception {
         borrower1 = new Borrower("2.222.222-2","ass","998","aasss@a");
-        borrower2 = new Borrower("21","asd","999","aawws@a");
+        borrower2 = new Borrower("3.333.333-3","asd","999","aawws@a");
         borrower3 = new Borrower("31","add","991","sas@a");
 
         borrowers = new LinkedList<>();
@@ -85,5 +85,15 @@ public class BorrowerServiceImplTest {
         resp = borrowerService.canBorrow(borrower1.getRut(),"17-03-2017");
 
         assertEquals(false,resp);
+    }
+    @Test
+    public void whenVerifyCanBarrowerByRutReturnTrueBecauseNotHaveAListSuspension(){
+        LinkedList <Suspension> suspensions = new LinkedList<>();
+        when(suspensionService.getAllSuspensionByRut(borrower2.getRut())).thenReturn(suspensions);
+        Boolean resp;
+
+        resp = borrowerService.canBorrow(borrower2.getRut(),"17-03-2017");
+
+        assertEquals(true,resp);
     }
 }
