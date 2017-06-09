@@ -48,6 +48,7 @@ public class BorrowerServiceImplTest {
         suspension1 = new Suspension();
         suspension1.setIdentifier("1");
 
+
     }
 
     @Test
@@ -96,4 +97,6 @@ public class BorrowerServiceImplTest {
 
         assertEquals(true,resp);
     }
+
+    
 }
