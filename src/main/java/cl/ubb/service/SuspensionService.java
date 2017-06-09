@@ -32,4 +32,8 @@ public class SuspensionService {
         return output;
 
     }
+
+    public List <Suspension> getAllSuspensionByRut(String rut) {
+        return null;
+    }
 }

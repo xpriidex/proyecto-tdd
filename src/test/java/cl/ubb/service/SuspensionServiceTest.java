@@ -91,7 +91,5 @@ public class SuspensionServiceTest {
         when(suspensionDao.get("4")).thenReturn(null);
 
         result = suspensionService.get("4");
-
-
     }
 }
