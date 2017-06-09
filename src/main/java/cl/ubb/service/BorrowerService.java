@@ -2,7 +2,6 @@ package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
-import cl.ubb.model.Suspension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class BorrowerService {
         return borrowerDao.getAll();
     }
     public boolean canBorrow(String rut, String date){
-        return false;
+        return true;
     }
 
 }

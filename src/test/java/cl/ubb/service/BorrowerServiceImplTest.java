@@ -2,6 +2,7 @@ package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
+import cl.ubb.model.Suspension;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +22,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BorrowerServiceImplTest {
     private LinkedList<Borrower> resp;
-    LinkedList<Borrower> borrowers ;
+    private LinkedList<Borrower> borrowers ;
     private Borrower borrower1,borrower2,borrower3;
+    private Suspension suspension1;
 
     @Mock
     private BorrowerDao borrowerDao;
@@ -42,6 +44,9 @@ public class BorrowerServiceImplTest {
         borrowers.add(borrower1);
         borrowers.add(borrower2);
         borrowers.add(borrower3);
+
+        suspension1 = new Suspension();
+        suspension1.setIdentifier("1");
 
     }
 
@@ -64,15 +69,11 @@ public class BorrowerServiceImplTest {
     }
 
     @Test
-    public void whenVerifyCanBarrowerByRutReturnFalseBecauseNotHaveSuspension(){
+    public void whenVerifyCanBarrowerByRutReturnTrueBecauseNotHaveSuspension(){
         Boolean resp;
-
         resp = borrowerService.canBorrow(borrower1.getRut(),"17-03-2017");
-
-        assertEquals(false,resp);
-
-
-
+        assertEquals(true,resp);
     }
+
 
 }
