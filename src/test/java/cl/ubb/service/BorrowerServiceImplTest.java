@@ -25,7 +25,7 @@ public class BorrowerServiceImplTest {
     private LinkedList<Borrower> resp;
     private LinkedList<Borrower> borrowers ;
     private Borrower borrower1,borrower2,borrower3;
-    private Suspension suspension1;
+    private Suspension suspension1,suspension2;
 
     @Mock
     private BorrowerDao borrowerDao;
@@ -39,7 +39,7 @@ public class BorrowerServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        calendar.set(2017,05,10);
+
         borrower1 = new Borrower("2.222.222-2","ass","998","aasss@a");
         borrower2 = new Borrower("3.333.333-3","asd","999","aawws@a");
         borrower3 = new Borrower("31","add","991","sas@a");
@@ -51,7 +51,16 @@ public class BorrowerServiceImplTest {
 
         suspension1 = new Suspension();
         suspension1.setIdentifier("1");
+        suspension1.setUnitOfTime("Days");
+        suspension1.setNumberOfUnitOfTime("15");
         suspension1.setStarDate("21-03-2017");
+
+        suspension2 = new Suspension();
+
+        suspension2.setIdentifier("2");
+        suspension2.setUnitOfTime("Days");
+        suspension2.setNumberOfUnitOfTime("15");
+        suspension2.setStarDate("15-05-2017");
 
 
     }
@@ -83,6 +92,7 @@ public class BorrowerServiceImplTest {
 
     @Test
     public void whenVerifyCanBarrowerByRutReturnFalseBecauseHaveSuspension(){
+        calendar.set(2017,03,17);
         LinkedList <Suspension> suspensions = new LinkedList<>();
         suspensions.add(suspension1);
         when(suspensionService.getAllSuspensionByRut(borrower1.getRut())).thenReturn(suspensions);
@@ -105,6 +115,8 @@ public class BorrowerServiceImplTest {
 
     @Test
     public void whenVerifyCanBarrowerDateIsTheSameDayThatTheTermOfTheSuspensionThenReturnsFalse(){
+        calendar.set(2017,04,05);
+
         LinkedList <Suspension> suspensions = new LinkedList<>();
         suspensions.add(suspension1);
         when(suspensionService.getAllSuspensionByRut(borrower2.getRut())).thenReturn(suspensions);
@@ -125,4 +137,18 @@ public class BorrowerServiceImplTest {
         assertEquals(true,resp);
 
     }
+
+    @Test
+    public void whenVerifyCurrentDateWithinPenaltyPeriodReturnsFalse(){
+        calendar.set(2017,04,1);
+        LinkedList <Suspension> suspensions = new LinkedList<>();
+        suspensions.add(suspension2);
+        when(suspensionService.getAllSuspensionByRut(borrower2.getRut())).thenReturn(suspensions);
+        Boolean resp;
+        resp = borrowerService.canBorrow(borrower2.getRut(),"21-03-2017");
+
+        assertEquals(false,resp);
+
+    }
+
 }
