@@ -3,6 +3,7 @@ package cl.ubb.controller;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Subject;
 import cl.ubb.service.SubjectService;
+import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static com.jayway.restassured.http.ContentType.JSON;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 
@@ -65,6 +69,16 @@ public class SubjectControllerTest {
                 assertThat().
                 body("identifier",equalTo("1001")).
                 statusCode(SC_OK);
+    }
+    @Test
+    public void testGetSubjectByIdNotExist() throws ReadErrorException {
+        doThrow(new ReadErrorException("")).when(subjectService).get(anyString());
+        given().
+                contentType(JSON).
+                when().
+                get("/subject/{id}",1).
+                then().
+                statusCode(SC_NOT_FOUND);
     }
 
 
