@@ -108,6 +108,16 @@ public class SubjectControllerTest {
                  statusCode(SC_OK);
      }
 
+    @Test
+    public void testGetAllSubjectWhenEmptyListException() throws EmptyListException {
+        doThrow(new EmptyListException("")).when(subjectService).getAll();
+        given().
+                contentType(JSON).
+                when().
+                get("/subject").
+                then().
+                statusCode(SC_NOT_FOUND);
+    }
 
 
 
