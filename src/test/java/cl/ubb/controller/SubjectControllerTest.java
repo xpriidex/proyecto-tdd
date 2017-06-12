@@ -62,7 +62,7 @@ public class SubjectControllerTest {
                 get("/subject/{id}",1).
         then().
                 assertThat().
-                body("identifier",equalTo("1")).
+                body("identifier",equalTo("1001")).
                 statusCode(SC_OK);
     }
 
