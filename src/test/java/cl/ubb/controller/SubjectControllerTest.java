@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 
@@ -56,7 +57,7 @@ public class SubjectControllerTest {
 
     @Test
     public void testGetSubjectById() throws ReadErrorException {
-        when(subjectService.get("1")).thenReturn(subject1);
+        when(subjectService.get(anyString())).thenReturn(subject1);
         given().
         when().
                 get("/subject/{id}",1).

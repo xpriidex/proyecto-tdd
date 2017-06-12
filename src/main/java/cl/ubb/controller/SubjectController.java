@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -26,6 +27,11 @@ public class SubjectController {
     @ResponseBody
     public ResponseEntity<Subject> readOmil(@PathVariable("id") String id) throws ReadErrorException {
         return new ResponseEntity<Subject>(subjectService.get(id),OK);
+    }
+
+    @ExceptionHandler(ReadErrorException.class)
+    public ResponseEntity subjectNotFoundError() {
+        return ResponseEntity.status(NOT_FOUND).body("Subject no encontrado");
     }
 
 }
