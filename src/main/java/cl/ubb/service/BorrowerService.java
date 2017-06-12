@@ -4,6 +4,7 @@ import cl.ubb.dao.BorrowerDao;
 import cl.ubb.model.Borrower;
 import cl.ubb.model.Suspension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created by Felipe Cifuentes on 22-05-2017.
  */
+@Service
 public class BorrowerService {
     @Autowired
     private BorrowerDao borrowerDao;

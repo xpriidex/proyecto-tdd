@@ -8,6 +8,7 @@ import cl.ubb.dao.exceptions.UpdateException;
 import cl.ubb.model.Copy;
 import cl.ubb.model.Subject;
 import cl.ubb.service.exceptions.EmptyListException;
+import org.springframework.stereotype.Service;
 
 import javax.print.attribute.standard.Copies;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by Felipe Cifuentes on 05-06-2017.
  */
+@Service
 public class CopyService {
     private CopyDao copyDao;
 

@@ -5,12 +5,14 @@ import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Suspension;
 import cl.ubb.service.exceptions.EmptyListException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Felipe on 5/31/2017.
  */
+@Service
 public class SuspensionService {
     @Autowired
     private SuspensionDao suspensionDao;

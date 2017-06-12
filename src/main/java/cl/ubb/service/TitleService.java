@@ -4,12 +4,14 @@ import cl.ubb.dao.TitleDao;
 import cl.ubb.model.Title;
 import cl.ubb.service.exceptions.EmptyListException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Felipe on 5/29/2017.
  */
+@Service
 public class TitleService {
 
     @Autowired
