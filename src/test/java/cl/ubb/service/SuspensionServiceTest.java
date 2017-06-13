@@ -33,9 +33,17 @@ public class SuspensionServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        borrower1 = new Borrower("1111111-1","Andres Perez","","");
-        borrower2 = new Borrower("2222222-2","Cristian Galvez","","");
-        borrower3 = new Borrower("3333333-3","Carlos Casales","","");
+        borrower1 = new Borrower();
+        borrower1.setRut("1111111-1");
+        borrower1.setName("Andres Perez");
+
+        borrower2 = new Borrower();
+        borrower2.setRut("2222222-2");
+        borrower2.setName("Cristian Galvez");
+
+        borrower3 = new Borrower();
+        borrower3.setRut("3333333-3");
+        borrower3.setName("Carlos Casales");
 
         suspension1 = new Suspension("1","atraso","10-05-2017","5","dias",borrower1);
         suspension2 = new Suspension("2","atraso","20-05-2017","20","dias",borrower1);

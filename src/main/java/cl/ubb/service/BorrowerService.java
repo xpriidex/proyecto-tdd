@@ -2,7 +2,9 @@ package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
 import cl.ubb.dao.exceptions.CreateException;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Borrower;
+import cl.ubb.model.BorrowerCategory;
 import cl.ubb.model.Suspension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,29 @@ public class BorrowerService {
         if (borrowerDao.exist(borrower.getRut()))
             throw new CreateException();
         borrowerDao.create(borrower);
+
+    }
+
+    public Boolean borrowerExist(String rut){
+        if (borrowerDao.exist(rut))
+            return true;
+        return false;
+    }
+
+    public BorrowerCategory getBorrowerCategory(String rut) throws ReadErrorException {
+        if (!borrowerDao.exist(rut))
+            throw new ReadErrorException();
+        
+        BorrowerCategory output =  borrowerDao.get(rut).getBorrowerCategory();
+
+        // TODO: 6/13/2017  if (output==null)
+        
+        
+
+        return output;
+
+
+
 
     }
 

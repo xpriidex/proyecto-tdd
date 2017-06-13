@@ -2,7 +2,9 @@ package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
 import cl.ubb.dao.exceptions.CreateException;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Borrower;
+import cl.ubb.model.BorrowerCategory;
 import cl.ubb.model.Suspension;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +16,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Calendar;
 import java.util.LinkedList;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,6 +32,7 @@ public class BorrowerServiceImplTest {
     private LinkedList<Borrower> borrowers ;
     private Borrower borrower1,borrower2,borrower3;
     private Suspension suspension1,suspension2;
+    private BorrowerCategory borrowerCategory;
 
     @Mock
     private BorrowerDao borrowerDao;
@@ -42,9 +47,23 @@ public class BorrowerServiceImplTest {
     @Before
     public void setUp() throws Exception {
 
-        borrower1 = new Borrower("2.222.222-2","ass","998","aasss@a");
-        borrower2 = new Borrower("3.333.333-3","asd","999","aawws@a");
-        borrower3 = new Borrower("31","add","991","sas@a");
+        borrowerCategory = new BorrowerCategory();
+        borrowerCategory.setIndentifier("1");
+        borrowerCategory.setMaxNumberOfLoans(2);
+        borrowerCategory.setName("postgrado");
+
+        borrower1 = new Borrower();
+        borrower1.setRut("1111111-1");
+        borrower1.setName("Andres Perez");
+        borrower1.setBorrowerCategory(borrowerCategory);
+
+        borrower2 = new Borrower();
+        borrower2.setRut("2222222-2");
+        borrower2.setName("Cristian Galvez");
+
+        borrower3 = new Borrower();
+        borrower3.setRut("3333333-3");
+        borrower3.setName("Carlos Casales");
 
         borrowers = new LinkedList<>();
         borrowers.add(borrower1);
@@ -163,6 +182,37 @@ public class BorrowerServiceImplTest {
     public void checkCreateNewBorrowerWhenAlreadyExists() throws Exception {
         when(borrowerDao.exist(borrower1.getRut())).thenReturn(true);
         borrowerService.create(borrower1);
+    }
+
+    @Test
+    public void checkBorrowerExist() throws Exception {
+        Boolean result;
+        when(borrowerDao.exist(borrower1.getRut())).thenReturn(true);
+
+        result=borrowerService.borrowerExist(borrower1.getRut());
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void checkBorrowerNotExist() throws Exception {
+        Boolean result;
+        when(borrowerDao.exist(borrower1.getRut())).thenReturn(false);
+
+        result=borrowerService.borrowerExist(borrower1.getRut());
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void checkBorrowerCategory() throws  ReadErrorException {
+        BorrowerCategory borrowerCategory;
+        when(borrowerDao.exist(borrower1.getRut())).thenReturn(true);
+        when(borrowerDao.get(borrower1.getRut())).thenReturn(borrower1);
+
+        borrowerCategory=borrowerService.getBorrowerCategory(borrower1.getRut());
+
+        assertEquals("postgrado",borrowerCategory.getName());
     }
 
 }
