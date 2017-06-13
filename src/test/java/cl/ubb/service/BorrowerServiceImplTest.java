@@ -1,6 +1,7 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
+import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.model.Borrower;
 import cl.ubb.model.Suspension;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -149,6 +151,18 @@ public class BorrowerServiceImplTest {
 
         assertEquals(false,resp);
 
+    }
+
+    @Test
+    public void checkCreateNewBorrower() throws Exception {
+        borrowerService.create(borrower1);
+        verify(borrowerDao).create(borrower1);
+    }
+
+    @Test(expected = CreateException.class)
+    public void checkCreateNewBorrowerWhenAlreadyExists() throws Exception {
+        when(borrowerDao.exist(borrower1.getRut())).thenReturn(true);
+        borrowerService.create(borrower1);
     }
 
 }

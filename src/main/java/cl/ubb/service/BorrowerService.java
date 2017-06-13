@@ -1,6 +1,7 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.BorrowerDao;
+import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.model.Borrower;
 import cl.ubb.model.Suspension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,16 @@ public class BorrowerService {
 
     @Autowired
     private SuspensionService suspensionService;
-    public List<Borrower> getAll() {
 
+    public List<Borrower> getAll() {
         return borrowerDao.getAll();
+    }
+
+    public void create(Borrower borrower) throws CreateException {
+        if (borrowerDao.exist(borrower.getRut()))
+            throw new CreateException();
+        borrowerDao.create(borrower);
+
     }
 
     public boolean canBorrow(String rut, String date){
