@@ -5,6 +5,10 @@ package cl.ubb.dao.exceptions;
  */
 public class ReadErrorException extends Throwable {
 
+    public ReadErrorException(String message) {
+        super(message);
+    }
+
     public ReadErrorException() {
     }
 }
