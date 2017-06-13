@@ -215,4 +215,10 @@ public class BorrowerServiceImplTest {
         assertEquals("postgrado",borrowerCategory.getName());
     }
 
+    @Test(expected = ReadErrorException.class)
+    public void checkBorrowerCategoryNotExist() throws ReadErrorException {
+        when(borrowerDao.exist(borrower1.getRut())).thenReturn(true);
+        borrowerService.getBorrowerCategory(null);
+    }
+
 }
