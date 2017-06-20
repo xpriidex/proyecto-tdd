@@ -21,7 +21,6 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/subject")
 public class SubjectController {
-    private Subject subject;
 
     @Autowired
     private SubjectService subjectService;

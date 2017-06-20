@@ -1,23 +1,28 @@
 package cl.ubb.model;
 
 import javax.persistence.Entity;
+import java.util.LinkedList;
 
 /**
  * Created by Felipe Cifuentes on 29-05-2017.
  */
 @Entity
 public class BorrowerCategory {
-    String indentifier;
-    String name;
-    int maxNumberOfLoans;
+    private String indentifier;
+    private String name;
+    private int maxNumberOfLoans;
+    private LinkedList <LoanCondition> loanConditions;
+    private LinkedList <Borrower> borrowers;
 
     public BorrowerCategory() {
     }
 
-    public BorrowerCategory(String indentifier, String name, int maxNumberOfLoans) {
+    public BorrowerCategory(String indentifier, String name, int maxNumberOfLoans, LinkedList<LoanCondition> loanConditions, LinkedList<Borrower> borrowers) {
         this.indentifier = indentifier;
         this.name = name;
         this.maxNumberOfLoans = maxNumberOfLoans;
+        this.loanConditions = loanConditions;
+        this.borrowers = borrowers;
     }
 
     public String getIndentifier() {
@@ -44,6 +49,22 @@ public class BorrowerCategory {
         this.maxNumberOfLoans = maxNumberOfLoans;
     }
 
+    public LinkedList<LoanCondition> getLoanConditions() {
+        return loanConditions;
+    }
+
+    public void setLoanConditions(LinkedList<LoanCondition> loanConditions) {
+        this.loanConditions = loanConditions;
+    }
+
+    public LinkedList<Borrower> getBorrowers() {
+        return borrowers;
+    }
+
+    public void setBorrowers(LinkedList<Borrower> borrowers) {
+        this.borrowers = borrowers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,7 +74,10 @@ public class BorrowerCategory {
 
         if (maxNumberOfLoans != that.maxNumberOfLoans) return false;
         if (indentifier != null ? !indentifier.equals(that.indentifier) : that.indentifier != null) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (loanConditions != null ? !loanConditions.equals(that.loanConditions) : that.loanConditions != null)
+            return false;
+        return borrowers != null ? borrowers.equals(that.borrowers) : that.borrowers == null;
     }
 
     @Override
@@ -61,6 +85,8 @@ public class BorrowerCategory {
         int result = indentifier != null ? indentifier.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + maxNumberOfLoans;
+        result = 31 * result + (loanConditions != null ? loanConditions.hashCode() : 0);
+        result = 31 * result + (borrowers != null ? borrowers.hashCode() : 0);
         return result;
     }
 }

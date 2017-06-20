@@ -5,17 +5,16 @@ import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Borrower;
 import cl.ubb.model.BorrowerCategory;
+import cl.ubb.model.LoanCondition;
 import cl.ubb.model.Suspension;
+import cl.ubb.service.exceptions.EmptyListException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Felipe Cifuentes on 22-05-2017.
@@ -28,8 +27,13 @@ public class BorrowerService {
     @Autowired
     private SuspensionService suspensionService;
 
-    public List<Borrower> getAll() {
-        return borrowerDao.getAll();
+    public List<Borrower> getAll() throws EmptyListException {
+        List<Borrower> output = borrowerDao.getAll();
+        if (output.isEmpty())
+            throw new EmptyListException();
+
+        return output;
+
     }
 
     public void create(Borrower borrower) throws CreateException {
@@ -110,4 +114,65 @@ public class BorrowerService {
         return resp;
     }
 
+    public boolean validateAtributes(Borrower borrower1) {
+        if(borrower1.getRut().equals("")||borrower1.getName().equals("")||borrower1.getCellPhone().equals("")
+                ||borrower1.getEmail().equals("")||borrower1.getBorrowerCategory()==null){
+            return false;
+        }
+        return true;
+    }
+
+    public List<Borrower> getAllBorrowerSuspention() throws EmptyListException {
+        List<Borrower> allBorrower = getAll();
+        List<Borrower> borrowerSuspentions = new ArrayList<>();
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        Date date = cal.getTime();
+        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+        String date1 = format1.format(date);
+
+
+        for (Borrower borrower:allBorrower){
+            if (canBorrow(borrower.getRut(),date1))
+                borrowerSuspentions.add(borrower);
+        }
+
+        return borrowerSuspentions;
+    }
+
+    public List<Borrower> getAllBorrowerNotHaveSuspention() throws EmptyListException {
+        List<Borrower> allBorrower = getAll();
+        List<Borrower> borrowerNotHaveSuspentions = new ArrayList<>();
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        Date date = cal.getTime();
+        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+        String date1 = format1.format(date);
+
+
+        for (Borrower borrower:allBorrower){
+            if (!canBorrow(borrower.getRut(),date1))
+                borrowerNotHaveSuspentions.add(borrower);
+        }
+
+        return borrowerNotHaveSuspentions;
+    }
+
+    public List <LoanCondition> getLoanCondition(String rut) throws ReadErrorException, EmptyListException {
+        BorrowerCategory borrowerCategory = getBorrowerCategory(rut);
+
+        if (borrowerCategory.getLoanConditions().size()==0)
+            throw new EmptyListException();
+
+        return borrowerCategory.getLoanConditions();
+    }
+
+    public Borrower get(String rut)throws ReadErrorException {
+        if (!borrowerDao.exist(rut))
+            throw new ReadErrorException();
+
+        return borrowerDao.get(rut);
+    }
 }

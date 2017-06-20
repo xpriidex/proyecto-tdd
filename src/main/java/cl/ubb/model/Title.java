@@ -1,6 +1,7 @@
 package cl.ubb.model;
 
 import javax.persistence.Entity;
+import java.util.LinkedList;
 
 /**
  * Created by Felipe Cifuentes on 29-05-2017.
@@ -12,18 +13,22 @@ public class Title {
     private String year;
     private String format;
     private String replacementCost;
+    private TitleCategory titleCategory;
     private Subject subject;
+    private LinkedList<Copy> copies;
 
     public Title() {
     }
 
-    public Title(String identifier, String name, String year, String format, String replacementCost, Subject subject) {
+    public Title(String identifier, String name, String year, String format, String replacementCost, TitleCategory titleCategory, Subject subject, LinkedList<Copy> copies) {
         this.identifier = identifier;
         this.name = name;
         this.year = year;
         this.format = format;
         this.replacementCost = replacementCost;
+        this.titleCategory = titleCategory;
         this.subject = subject;
+        this.copies = copies;
     }
 
     public String getIdentifier() {
@@ -66,12 +71,28 @@ public class Title {
         this.replacementCost = replacementCost;
     }
 
+    public TitleCategory getTitleCategory() {
+        return titleCategory;
+    }
+
+    public void setTitleCategory(TitleCategory titleCategory) {
+        this.titleCategory = titleCategory;
+    }
+
     public Subject getSubject() {
         return subject;
     }
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public LinkedList<Copy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(LinkedList<Copy> copies) {
+        this.copies = copies;
     }
 
     @Override
@@ -87,7 +108,10 @@ public class Title {
         if (format != null ? !format.equals(title.format) : title.format != null) return false;
         if (replacementCost != null ? !replacementCost.equals(title.replacementCost) : title.replacementCost != null)
             return false;
-        return subject != null ? subject.equals(title.subject) : title.subject == null;
+        if (titleCategory != null ? !titleCategory.equals(title.titleCategory) : title.titleCategory != null)
+            return false;
+        if (subject != null ? !subject.equals(title.subject) : title.subject != null) return false;
+        return copies != null ? copies.equals(title.copies) : title.copies == null;
     }
 
     @Override
@@ -97,7 +121,9 @@ public class Title {
         result = 31 * result + (year != null ? year.hashCode() : 0);
         result = 31 * result + (format != null ? format.hashCode() : 0);
         result = 31 * result + (replacementCost != null ? replacementCost.hashCode() : 0);
+        result = 31 * result + (titleCategory != null ? titleCategory.hashCode() : 0);
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
+        result = 31 * result + (copies != null ? copies.hashCode() : 0);
         return result;
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 public class SuspensionService {
     @Autowired
     private SuspensionDao suspensionDao;
+
     public List<Suspension> getAll() throws EmptyListException {
 
         List<Suspension> result= suspensionDao.getAll();

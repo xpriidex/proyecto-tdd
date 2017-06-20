@@ -1,21 +1,25 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.SubjectDao;
+import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.dao.exceptions.DeleteException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Subject;
 import cl.ubb.service.exceptions.EmptyListException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,12 +40,16 @@ public class SubjectServiceTest {
 
         subject.setIdentifier("1001");
         subject.setName("Robin Hood");
+
         subject2.setIdentifier("2001");
         subject2.setName("Nutricion");
+
         subject3.setIdentifier("1003");
         subject3.setName("Rimas y Leyendas");
+
         subject4.setIdentifier("101");
         subject4.setName("Literatura Del Siglo XIX");
+
         subject5.setIdentifier("202");
         subject5.setName("Ingenieria De Software");
 
@@ -76,12 +84,12 @@ public class SubjectServiceTest {
     @Test
     public void whendoIsCalledAndThereIsASubjectWhitAnIdGivenShouldReturnTheNameOfSubject(){
         String resp;
-        when(subjectDao.get("12345")).thenReturn(subject);
+        when(subjectDao.exist(anyString())).thenReturn(true);
+        when(subjectDao.get(anyString())).thenReturn(subject);
 
-        when(subjectService.getName("1")).thenReturn("Literatura Siglo XIX");
 
         resp=subjectService.getName("1");
-        assertEquals("Literatura Siglo XIX",resp);
+        assertEquals("Robin Hood",resp);
 
     }
 
@@ -142,6 +150,52 @@ public class SubjectServiceTest {
         result = subjectService.get("102");
 
     }
+
+    @Test
+    public void checkCreateSubject() throws CreateException {
+        when(subjectDao.exist(subject.getIdentifier())).thenReturn(true);
+
+        subjectService.create(subject);
+        verify(subjectDao).create(subject);
+    }
+
+    @Test(expected = CreateException.class)
+    public void checkCreateSubjectAlreadyExist() throws CreateException {
+        when(subjectDao.exist(subject.getIdentifier())).thenReturn(false);
+
+        subjectService.create(subject);
+    }
+
+    @Test
+    public void checkUpdateSubject() throws Exception, ReadErrorException {
+        Subject subjectToUpdate = subject;
+        subjectToUpdate.setName("Cambio");
+
+        Mockito.when(subjectDao.exist(subject.getIdentifier())).thenReturn(true);
+        Mockito.when(subjectDao.get(subject.getIdentifier())).thenReturn(subject);
+
+        Subject result = subjectService.update(subjectToUpdate);
+
+        Mockito.verify(subjectDao).update(subjectToUpdate);
+
+        Assert.assertEquals("Cambio",result.getName());
+
+    }
+
+    @Test(expected = ReadErrorException.class)
+    public void checkUpdateSubjectNotExist() throws Exception, ReadErrorException {
+        Subject subjectToUpdate = subject;
+        subjectToUpdate.setName("Cambio");
+
+        Mockito.when(subjectDao.exist(subject.getIdentifier())).thenReturn(false);
+
+        Subject result = subjectService.update(subjectToUpdate);
+
+    }
+
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 package cl.ubb.model;
 
 import javax.persistence.Entity;
+import java.util.LinkedList;
 
 /**
  * Created by Felipe Cifuentes on 05-06-2017.
@@ -14,8 +15,8 @@ public class Journal extends Title {
     public Journal() {
     }
 
-    public Journal(String identifier, String name, String year, String format, String replacementCost, Subject subject, String volumen, String isbn, String issue) {
-        super(identifier, name, year, format, replacementCost, subject);
+    public Journal(String identifier, String name, String year, String format, String replacementCost, TitleCategory titleCategory, Subject subject, LinkedList<Copy> copies, String volumen, String isbn, String issue) {
+        super(identifier, name, year, format, replacementCost, titleCategory, subject, copies);
         this.volumen = volumen;
         this.isbn = isbn;
         this.issue = issue;

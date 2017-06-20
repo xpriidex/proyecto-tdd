@@ -4,7 +4,6 @@ import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Subject;
 import cl.ubb.service.SubjectService;
 import cl.ubb.service.exceptions.EmptyListException;
-import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,7 +95,7 @@ public class SubjectControllerTest {
                 statusCode(SC_NOT_FOUND);
     }
 
-     @Test
+    @Test
     public void testGetAll() throws EmptyListException {
          when(subjectService.getAll()).thenReturn((LinkedList<Subject>) subjects);
          given().
@@ -106,7 +105,7 @@ public class SubjectControllerTest {
                  assertThat().
                  body("identifier[0]",equalTo("1001")).
                  statusCode(SC_OK);
-     }
+    }
 
     @Test
     public void testGetAllSubjectWhenEmptyListException() throws EmptyListException {

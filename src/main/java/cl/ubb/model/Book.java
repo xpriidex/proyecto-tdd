@@ -1,6 +1,7 @@
 package cl.ubb.model;
 
 import javax.persistence.Entity;
+import java.util.LinkedList;
 
 /**
  * Created by Felipe Cifuentes on 05-06-2017.
@@ -16,8 +17,8 @@ public class Book extends Title {
     public Book() {
     }
 
-    public Book(String identifier, String name, String year, String format, String replacementCost, Subject subject, String author, String edition, String isbn, String editorial) {
-        super(identifier, name, year, format, replacementCost, subject);
+    public Book(String identifier, String name, String year, String format, String replacementCost, TitleCategory titleCategory, Subject subject, LinkedList<Copy> copies, String author, String edition, String isbn, String editorial) {
+        super(identifier, name, year, format, replacementCost, titleCategory, subject, copies);
         this.author = author;
         this.edition = edition;
         this.isbn = isbn;

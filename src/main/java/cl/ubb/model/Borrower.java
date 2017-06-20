@@ -1,6 +1,7 @@
 package cl.ubb.model;
 
 import javax.persistence.Entity;
+import java.util.LinkedList;
 
 /**
  * Created by Felipe Cifuentes on 22-05-2017.
@@ -13,16 +14,20 @@ public class Borrower {
     private String cellPhone;
     private String email;
     private BorrowerCategory borrowerCategory;
+    private LinkedList <Suspension> suspensions;
+    private LinkedList <Loan> loans;
 
     public Borrower() {
     }
 
-    public Borrower(String rut, String name, String cellPhone, String email, BorrowerCategory borrowerCategory) {
+    public Borrower(String rut, String name, String cellPhone, String email, BorrowerCategory borrowerCategory, LinkedList<Suspension> suspensions, LinkedList<Loan> loans) {
         this.rut = rut;
         this.name = name;
         this.cellPhone = cellPhone;
         this.email = email;
         this.borrowerCategory = borrowerCategory;
+        this.suspensions = suspensions;
+        this.loans = loans;
     }
 
     public String getRut() {
@@ -65,6 +70,22 @@ public class Borrower {
         this.borrowerCategory = borrowerCategory;
     }
 
+    public LinkedList<Suspension> getSuspensions() {
+        return suspensions;
+    }
+
+    public void setSuspensions(LinkedList<Suspension> suspensions) {
+        this.suspensions = suspensions;
+    }
+
+    public LinkedList<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(LinkedList<Loan> loans) {
+        this.loans = loans;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,7 +97,11 @@ public class Borrower {
         if (name != null ? !name.equals(borrower.name) : borrower.name != null) return false;
         if (cellPhone != null ? !cellPhone.equals(borrower.cellPhone) : borrower.cellPhone != null) return false;
         if (email != null ? !email.equals(borrower.email) : borrower.email != null) return false;
-        return borrowerCategory != null ? borrowerCategory.equals(borrower.borrowerCategory) : borrower.borrowerCategory == null;
+        if (borrowerCategory != null ? !borrowerCategory.equals(borrower.borrowerCategory) : borrower.borrowerCategory != null)
+            return false;
+        if (suspensions != null ? !suspensions.equals(borrower.suspensions) : borrower.suspensions != null)
+            return false;
+        return loans != null ? loans.equals(borrower.loans) : borrower.loans == null;
     }
 
     @Override
@@ -86,6 +111,8 @@ public class Borrower {
         result = 31 * result + (cellPhone != null ? cellPhone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (borrowerCategory != null ? borrowerCategory.hashCode() : 0);
+        result = 31 * result + (suspensions != null ? suspensions.hashCode() : 0);
+        result = 31 * result + (loans != null ? loans.hashCode() : 0);
         return result;
     }
 }
