@@ -132,14 +132,25 @@ public class SubjectServiceTest {
     @Test
     public void whenGetSubjectIdIs101ReturnLiteraturaDelSigloXIX() throws ReadErrorException {
         Subject result = new Subject();
-        when(subjectDao.get("101")).thenReturn(subject4);
+        when(subjectDao.exist(subject4.getIdentifier())).thenReturn(true);
+        when(subjectDao.get(subject4.getIdentifier())).thenReturn(subject4);
 
-        result = subjectService.get("101");
+        result = subjectService.get(subject4.getIdentifier());
 
         assertEquals("101",result.getIdentifier());
         assertEquals("Literatura Del Siglo XIX",result.getName());
 
 
+    }
+
+    @Test
+    public void checkGetGetSubject() throws Exception, ReadErrorException {
+        Mockito.when(subjectDao.exist(subject.getIdentifier())).thenReturn(true);
+        Mockito.when(subjectDao.get(subject.getIdentifier())).thenReturn(subject);
+
+        Subject result = subjectService.get(subject.getIdentifier());
+
+        Assert.assertEquals(subject,result);
     }
 
     @Test(expected = ReadErrorException.class)
