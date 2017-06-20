@@ -56,7 +56,7 @@ public class BorrowerService {
         BorrowerCategory output =  borrowerDao.get(rut).getBorrowerCategory();
 
         // TODO: 6/13/2017  if (output==null)
-        
+
         
 
         return output;

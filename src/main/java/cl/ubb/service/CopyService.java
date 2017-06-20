@@ -6,11 +6,11 @@ import cl.ubb.dao.exceptions.DeleteException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.dao.exceptions.UpdateException;
 import cl.ubb.model.Copy;
-import cl.ubb.model.Subject;
 import cl.ubb.service.exceptions.EmptyListException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import javax.print.attribute.standard.Copies;
 import java.util.List;
 
 /**
@@ -18,31 +18,62 @@ import java.util.List;
  */
 @Service
 public class CopyService {
+
+    @Autowired
     private CopyDao copyDao;
 
-
     public void create(Copy copy)throws CreateException{
+        if (copyDao.exist(copy.getIdentifier()))
+            throw new CreateException();
+
+        copyDao.create(copy);
 
     }
 
-    public void update(Copy copy)throws UpdateException{
+    public Copy update(Copy copy)throws UpdateException{
+        if (!copyDao.exist(copy.getIdentifier()))
+            throw new UpdateException();
 
+        Copy copyToUpdate = copyDao.get(copy.getIdentifier());
+        copyToUpdate.setTitle(copy.getTitle());
+        copyToUpdate.setAcquisitionDate(copy.getAcquisitionDate());
+
+
+        copyDao.update(copyToUpdate);
+
+        return copyToUpdate;
     }
 
     public Copy delete(String id)throws DeleteException{
-        return null;
+        if (!copyDao.exist(id))
+            throw new DeleteException();
+
+        Copy ouput = copyDao.get(id);
+
+        copyDao.delete(id);
+
+        return ouput;
+
     }
 
-    public Copy get (String id){
-        return null;
+    public Copy get(String id) throws ReadErrorException {
+        if (!copyDao.exist(id))
+            throw new ReadErrorException();
+
+        return copyDao.get(id);
     }
 
-    public List<Subject> getAll(){
-        return null;
+    public List<Copy> getAll() throws EmptyListException {
+        List<Copy> copies = copyDao.getAll();
+        if (CollectionUtils.isEmpty(copies)) {
+            throw new EmptyListException();
+        }
+        return copies;
+
     }
 
     public boolean exist(String id){
-        return false;
+        return copyDao.exist(id);
     }
    
     public List<Copy> getAllAviableCopiesByTitleId(String id){
