@@ -18,7 +18,7 @@ public interface LoanDao {
 
     public Loan delete(String id)throws DeleteException;
 
-    public Loan get (String id);
+    public Loan get (String rut);
 
     public List<Loan> getAll();
 
