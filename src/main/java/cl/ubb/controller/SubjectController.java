@@ -37,6 +37,8 @@ public class SubjectController {
         return new ResponseEntity<List <Subject>>(subjectService.getAll(),OK);
     }
 
+
+
     @ExceptionHandler(ReadErrorException.class)
     public ResponseEntity subjectNotFoundError() {
         return ResponseEntity.status(NOT_FOUND).body("Subject no encontrado");

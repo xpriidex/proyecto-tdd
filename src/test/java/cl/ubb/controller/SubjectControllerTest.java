@@ -100,7 +100,7 @@ public class SubjectControllerTest {
          when(subjectService.getAll()).thenReturn((LinkedList<Subject>) subjects);
          given().
                  when().
-                 get("/subject/",1).
+                 get("/subject/list").
                  then().
                  assertThat().
                  body("identifier[0]",equalTo("1001")).

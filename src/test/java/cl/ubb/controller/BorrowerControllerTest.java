@@ -144,4 +144,6 @@ public class BorrowerControllerTest {
                 statusCode(SC_CREATED);
     }
 
+    // TODO: 6/28/2017 falta probar test desfavorable 
+
 }
