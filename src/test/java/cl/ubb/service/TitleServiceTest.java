@@ -1,22 +1,28 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.TitleDao;
+import cl.ubb.dao.exceptions.CreateException;
+import cl.ubb.dao.exceptions.DeleteException;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Book;
 import cl.ubb.model.Journal;
 import cl.ubb.model.Subject;
 import cl.ubb.model.Title;
 import cl.ubb.service.exceptions.EmptyListException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -27,6 +33,7 @@ public class TitleServiceTest {
     private Subject subject1,subject2;
     private Book book1, book2;
     private Journal journal1;
+    private LinkedList<Title> titles;
 
 
     @Before
@@ -71,6 +78,9 @@ public class TitleServiceTest {
         journal1.setReplacementCost("0");
         journal1.setVolumen("27");
         journal1.setIssue("5");
+        titles = new LinkedList<>();
+        titles.add(book1);
+        titles.add(book2);
     }
 
     @Mock
@@ -101,6 +111,95 @@ public class TitleServiceTest {
         List <Title> result;
 
         result = titleService.getAllTitlesForSubject("202");
+    }
+
+    @Test
+    public void checkCreateNewTitle() throws Exception {
+        Mockito.when(titleDao.exist(anyString())).thenReturn(false);
+
+        titleService.create(book1);
+
+        Mockito.verify(titleDao).create(book1);
+
+    }
+
+    @Test(expected = CreateException.class)
+    public void checkCreateNewTitleWhenAlreadyExists() throws Exception {
+        Mockito.when(titleDao.exist(anyString()))
+                .thenReturn(true);
+
+        titleService.create(book1);
+
+    }
+
+    @Test
+    public void checkDeleteExistingTitle() throws Exception {
+        Mockito.when(titleDao.exist(anyString()))
+                .thenReturn(true);
+
+        titleService.delete(book1.getIdentifier());
+
+        Mockito.verify(titleDao).delete(book1.getIdentifier());
+    }
+
+    @Test(expected = DeleteException.class)
+    public void checkDeleteTitleInvalidId() throws Exception {
+        Mockito.when(titleDao.exist(book1.getIdentifier()))
+                .thenReturn(false);
+
+        titleService.delete(book1.getIdentifier());
+    }
+
+    @Test
+    public void checkUpdateTitle() throws Exception, ReadErrorException {
+
+        Title titleToUpdate = new Title();
+        titleToUpdate = book1;
+        titleToUpdate.setName("Cambio");
+
+        Mockito.when(titleDao.exist(anyString())).thenReturn(true);
+        Mockito.when(titleDao.get(anyString())).thenReturn(book1);
+
+        Title result = titleService.update(titleToUpdate);
+
+        Mockito.verify(titleDao).update(titleToUpdate);
+
+        Assert.assertEquals("Cambio",result.getName());
+
+    }
+
+    @Test(expected = ReadErrorException.class)
+    public void checkUpdateWhenTitleNotExist() throws Exception, ReadErrorException {
+        Mockito.when(titleDao.get(anyString())).thenReturn(null);
+
+        titleService.update(book1);
+    }
+
+    @Test
+    public void checkGetTitle() throws Exception, ReadErrorException {
+
+        Mockito.when(titleDao.exist(anyString())).thenReturn(true);
+        Mockito.when(titleDao.get(anyString())).thenReturn(book1);
+        Title getTitle = titleService.get(anyString());
+        Assert.assertEquals(book1,getTitle);
+    }
+
+    @Test(expected = ReadErrorException.class)
+    public void checkGetInvalidTitleId() throws ReadErrorException {
+        Mockito.when(titleDao.get(anyString())).thenReturn(null);
+        titleService.get(anyString());
+    }
+
+    @Test
+    public void checkGetAllTitles() throws Exception, ReadErrorException {
+        Mockito.when(titleDao.getAll()).thenReturn(titles);
+        Assert.assertEquals(titleService.getAll(),titles);
+    }
+
+    @Test(expected = EmptyListException.class)
+    public void checkGetAllWhenNullTitle() throws EmptyListException {
+        Mockito.when(titleDao.getAll()).thenReturn(null);
+        titleService.getAll();
     }
 
 
