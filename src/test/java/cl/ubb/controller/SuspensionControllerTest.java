@@ -136,5 +136,10 @@ public class SuspensionControllerTest {
                 statusCode(SC_CONFLICT);
     }
 
+    @Test
+    public void testFailCreateSuspension() throws CreateException {
+        doThrow(new CreateException("")).when(suspensionService).create(suspension1);
+        given().contentType(JSON).body(suspension1).when().post("/suspension/").then().statusCode(SC_NOT_ACCEPTABLE);
+    }
 
 }
