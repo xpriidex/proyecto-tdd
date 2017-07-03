@@ -38,9 +38,9 @@ public class TitleControllerTest {
     private List<Title> titles;
 
      @Mock
-    TitleService titleService;
+     TitleService titleService;
      @InjectMocks
-    TitleController titleController;
+     TitleController titleController;
 
      @Before
     public void setUp() throws Exception{
@@ -110,16 +110,16 @@ public class TitleControllerTest {
     }
     @Test
     public void testCreateTitle() throws CreateException {
-         given().
-                 contentType(JSON).
-                 body(title1).
-                 when().
-                 post("title/create").
-                 then().
-                 assertThat().
-                 statusCode(SC_CREATED);
 
-         Mockito.verify(titleService).create(title1);
+        given().
+                contentType(JSON).
+                body(title1).
+                when().
+                post("/title/create").
+                then().
+                assertThat().
+                statusCode(SC_CREATED);
+
+        Mockito.verify(titleService).create(title1);
     }
-
 }
