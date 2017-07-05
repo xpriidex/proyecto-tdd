@@ -1,6 +1,7 @@
 package cl.ubb.controller;
 
 
+import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 
 import cl.ubb.model.Subject;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Created by Felipe Cifuentes on 12-06-2017.
@@ -37,11 +37,24 @@ public class SubjectController {
         return new ResponseEntity<List <Subject>>(subjectService.getAll(),OK);
     }
 
+    @PostMapping("/create")
+    @ResponseBody
+    public ResponseEntity<Subject> createSubject(@RequestBody Subject subject) throws CreateException {
+        subjectService.create(subject);
+        return  new ResponseEntity<Subject>(subject,CREATED);
 
-
+    }
     @ExceptionHandler(ReadErrorException.class)
     public ResponseEntity subjectNotFoundError() {
         return ResponseEntity.status(NOT_FOUND).body("Subject no encontrado");
+    }
+    @ExceptionHandler(EmptyListException.class)
+    public ResponseEntity subjectEmptyListException() {
+        return ResponseEntity.status(NOT_FOUND).body("Subject List vacia");
+    }
+    @ExceptionHandler(CreateException.class)
+    public ResponseEntity createExceptionError() {
+        return ResponseEntity.status(CONFLICT).body("Existen conflictos");
     }
 
 }

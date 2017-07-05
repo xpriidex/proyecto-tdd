@@ -122,4 +122,15 @@ public class TitleControllerTest {
 
         Mockito.verify(titleService).create(title1);
     }
+    @Test
+    public void testFailCreateTitle() throws CreateException {
+        doThrow(new CreateException("")).when(titleService).create(title1);
+        given().
+                contentType(JSON).
+                body(title1).
+                when().
+                post("/title/create").
+                then().
+                statusCode(SC_CONFLICT);
+    }
 }

@@ -1,5 +1,6 @@
 package cl.ubb.controller;
 
+import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Borrower;
 import cl.ubb.model.BorrowerCategory;
@@ -18,9 +19,7 @@ import java.util.LinkedList;
 
 import static com.jayway.restassured.http.ContentType.JSON;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
-import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -144,6 +143,16 @@ public class BorrowerControllerTest {
                 statusCode(SC_CREATED);
     }
 
-    // TODO: 6/28/2017 falta probar test desfavorable 
+    @Test
+    public void testFailCreateBorrower() throws CreateException {
+        doThrow(new CreateException("")).when(borrowerService).create(borrower1);
+        given().
+                contentType(JSON).
+                body(borrower1).
+                when().
+                post("/borrower/create").
+                then().
+                statusCode(SC_CONFLICT);
+    }
 
 }

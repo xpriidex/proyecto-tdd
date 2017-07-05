@@ -139,16 +139,5 @@ public class BorrowerCategoryControllerTest {
                 statusCode(SC_CONFLICT);
     }
 
-    @Test
-    public void testFailCreateBorrowerCategory() throws CreateException {
-        doThrow(new CreateException("")).when(borrowerCategoryService).createBorrowerCategory(borrowerCategory1);
-        given().
-                contentType(JSON).
-                body(borrowerCategory1).
-                when().
-                post("/borrowerCategory/create").
-                then().
-                statusCode(SC_CONFLICT);
-    }
 
 }

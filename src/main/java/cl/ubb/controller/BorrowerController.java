@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Created by Felipe on 6/19/2017.
@@ -37,7 +35,7 @@ public class BorrowerController {
         return new ResponseEntity<List <Borrower>>(borrowerService.getAll(),OK);
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<Borrower> createBorrower(@RequestBody Borrower borrower) throws CreateException {
         borrowerService.create(borrower);
@@ -51,6 +49,10 @@ public class BorrowerController {
     @ExceptionHandler(EmptyListException.class)
     public ResponseEntity borrowerEmptyListException() {
         return ResponseEntity.status(NOT_FOUND).body("Borrower List vacia");
+    }
+    @ExceptionHandler(CreateException.class)
+    public ResponseEntity createExceptionError() {
+        return ResponseEntity.status(CONFLICT).body("Existen conflictos");
     }
 
 

@@ -1,5 +1,6 @@
 package cl.ubb.controller;
 
+import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Subject;
 import cl.ubb.service.SubjectService;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.LinkedList;
@@ -17,8 +19,7 @@ import java.util.List;
 
 import static com.jayway.restassured.http.ContentType.JSON;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
-import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -117,6 +118,35 @@ public class SubjectControllerTest {
                 then().
                 statusCode(SC_NOT_FOUND);
     }
+
+
+    @Test
+    public void testCreateSubject() throws CreateException {
+        given().
+                contentType(JSON).
+                body(subject1).
+                when().
+                post("/subject/create").
+                then().
+                assertThat().
+                body("identifier",equalTo(subject1.getIdentifier())).
+                statusCode(SC_CREATED);
+
+        Mockito.verify(subjectService).create(subject1);
+    }
+
+    @Test
+    public void testFailCreateSubject() throws CreateException {
+        doThrow(new CreateException("")).when(subjectService).create(subject1);
+        given().
+                contentType(JSON).
+                body(subject1).
+                when().
+                post("/subject/create").
+                then().
+                statusCode(SC_CONFLICT);
+    }
+
 
 
 
