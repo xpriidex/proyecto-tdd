@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 @Entity
 public class BorrowerCategory {
-    private String indentifier;
+    private String identifier;
     private String name;
     private int maxNumberOfLoans;
     private LinkedList <LoanCondition> loanConditions;
@@ -17,20 +17,20 @@ public class BorrowerCategory {
     public BorrowerCategory() {
     }
 
-    public BorrowerCategory(String indentifier, String name, int maxNumberOfLoans, LinkedList<LoanCondition> loanConditions, LinkedList<Borrower> borrowers) {
-        this.indentifier = indentifier;
+    public BorrowerCategory(String identifier, String name, int maxNumberOfLoans, LinkedList<LoanCondition> loanConditions, LinkedList<Borrower> borrowers) {
+        this.identifier = identifier;
         this.name = name;
         this.maxNumberOfLoans = maxNumberOfLoans;
         this.loanConditions = loanConditions;
         this.borrowers = borrowers;
     }
 
-    public String getIndentifier() {
-        return indentifier;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setIndentifier(String indentifier) {
-        this.indentifier = indentifier;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getName() {
@@ -73,7 +73,7 @@ public class BorrowerCategory {
         BorrowerCategory that = (BorrowerCategory) o;
 
         if (maxNumberOfLoans != that.maxNumberOfLoans) return false;
-        if (indentifier != null ? !indentifier.equals(that.indentifier) : that.indentifier != null) return false;
+        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (loanConditions != null ? !loanConditions.equals(that.loanConditions) : that.loanConditions != null)
             return false;
@@ -82,7 +82,7 @@ public class BorrowerCategory {
 
     @Override
     public int hashCode() {
-        int result = indentifier != null ? indentifier.hashCode() : 0;
+        int result = identifier != null ? identifier.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + maxNumberOfLoans;
         result = 31 * result + (loanConditions != null ? loanConditions.hashCode() : 0);

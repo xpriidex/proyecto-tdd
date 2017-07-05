@@ -23,7 +23,7 @@ public class BorrowerCategoryService {
     private BorrowerCategoryDao borrowerCategoryDao;
 
     public void createBorrowerCategory(BorrowerCategory borrowerCategory)throws CreateException{
-        if (borrowerCategoryDao.exist(borrowerCategory.getIndentifier()))
+        if (borrowerCategoryDao.exist(borrowerCategory.getIdentifier()))
             throw new CreateException();
 
         borrowerCategoryDao.create(borrowerCategory);
@@ -31,10 +31,10 @@ public class BorrowerCategoryService {
     }
 
     public BorrowerCategory updateBorrowerCategory(BorrowerCategory borrowerCategory)throws UpdateException{
-        if (!borrowerCategoryDao.exist(borrowerCategory.getIndentifier()))
+        if (!borrowerCategoryDao.exist(borrowerCategory.getIdentifier()))
             throw new UpdateException();
 
-        BorrowerCategory borrowerCategoryToUpdate = borrowerCategoryDao.get(borrowerCategory.getIndentifier());
+        BorrowerCategory borrowerCategoryToUpdate = borrowerCategoryDao.get(borrowerCategory.getIdentifier());
         borrowerCategoryToUpdate.setName(borrowerCategory.getName());
         borrowerCategoryToUpdate.setMaxNumberOfLoans(borrowerCategory.getMaxNumberOfLoans());
         borrowerCategoryToUpdate.setBorrowers(borrowerCategory.getBorrowers());

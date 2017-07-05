@@ -46,7 +46,7 @@ public class BorrowerControllerTest {
     @Before
     public void setUp() throws Exception {
         borrowerCategory = new BorrowerCategory();
-        borrowerCategory.setIndentifier("1");
+        borrowerCategory.setIdentifier("1");
         borrowerCategory.setMaxNumberOfLoans(2);
         borrowerCategory.setName("postgrado");
 

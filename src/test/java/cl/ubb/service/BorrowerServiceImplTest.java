@@ -69,7 +69,7 @@ public class BorrowerServiceImplTest {
         loanConditions.add(loanCondition2);
 
         borrowerCategory = new BorrowerCategory();
-        borrowerCategory.setIndentifier("1");
+        borrowerCategory.setIdentifier("1");
         borrowerCategory.setMaxNumberOfLoans(2);
         borrowerCategory.setName("postgrado");
 
