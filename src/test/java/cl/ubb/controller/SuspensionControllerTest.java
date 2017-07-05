@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SuspensionControllerTest {
-    private Suspension suspension1,suspension2;
+    private Suspension suspension1, suspension2;
     private List<Suspension> suspensions;
 
     @Mock
@@ -42,8 +42,8 @@ public class SuspensionControllerTest {
     @Before
     public void setUp() throws Exception {
 
-        suspension1= new Suspension();
-        suspension2= new Suspension();
+        suspension1 = new Suspension();
+        suspension2 = new Suspension();
 
         suspension1.setIdentifier("1");
         suspension1.setDescription("algo");
@@ -69,10 +69,10 @@ public class SuspensionControllerTest {
         when(suspensionService.get(anyString())).thenReturn(suspension1);
         given().
                 when().
-                get("/suspension/{id}",1).
+                get("/suspension/{id}", 1).
                 then().
                 assertThat().
-                body("identifier",equalTo(suspension1.getIdentifier())).
+                body("identifier", equalTo(suspension1.getIdentifier())).
                 statusCode(SC_OK);
     }
 
@@ -82,7 +82,7 @@ public class SuspensionControllerTest {
         given().
                 contentType(JSON).
                 when().
-                get("/suspension/{id}",1).
+                get("/suspension/{id}", 1).
                 then().
                 statusCode(SC_NOT_FOUND);
     }
@@ -95,7 +95,7 @@ public class SuspensionControllerTest {
                 get("/suspension/list").
                 then().
                 assertThat().
-                body("identifier[0]",equalTo(suspension1.getIdentifier())).
+                body("identifier[0]", equalTo(suspension1.getIdentifier())).
                 statusCode(SC_OK);
     }
 
@@ -139,7 +139,13 @@ public class SuspensionControllerTest {
     @Test
     public void testFailCreateSuspension() throws CreateException {
         doThrow(new CreateException("")).when(suspensionService).create(suspension1);
-        given().contentType(JSON).body(suspension1).when().post("/suspension/").then().statusCode(SC_NOT_ACCEPTABLE);
+        given().
+                contentType(JSON).
+                body(suspension1).
+                when().
+                post("/suspension/create").
+                then().
+                statusCode(SC_CONFLICT);
     }
 
 }

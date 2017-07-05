@@ -32,7 +32,7 @@ public class TitleController {
     public ResponseEntity<List<Title>> getAllTitle() throws EmptyListException {
         return new ResponseEntity<List<Title>>(titleService.getAll(),OK);
     }
-    @GetMapping("/create")
+    @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<Title> createTitle(@RequestBody Title title) throws CreateException {
         titleService.create(title);
