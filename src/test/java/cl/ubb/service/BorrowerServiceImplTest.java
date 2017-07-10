@@ -20,7 +20,6 @@ import java.util.List;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -261,7 +260,6 @@ public class BorrowerServiceImplTest {
         List<Borrower> result;
         when(borrowerDao.getAll()).thenReturn(borrowers);
         when(borrowerService.getAllBorrowerSuspention()).thenReturn(borrowers);
-
 
         result = borrowerService.getAllBorrowerSuspention();
 
