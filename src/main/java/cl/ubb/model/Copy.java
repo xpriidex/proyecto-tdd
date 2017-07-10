@@ -9,15 +9,15 @@ import javax.persistence.Entity;
 public class Copy {
     private String identifier;
     private String acquisitionDate;
-    private Title title;
+    private String idTitle;
 
     public Copy() {
     }
 
-    public Copy(String identifier, String acquisitionDate, Title title) {
+    public Copy(String identifier, String acquisitionDate, String idTitle) {
         this.identifier = identifier;
         this.acquisitionDate = acquisitionDate;
-        this.title = title;
+        this.idTitle = idTitle;
     }
 
     public String getIdentifier() {
@@ -36,32 +36,11 @@ public class Copy {
         this.acquisitionDate = acquisitionDate;
     }
 
-    public Title getTitle() {
-        return title;
+    public String getIdTitle() {
+        return idTitle;
     }
 
-    public void setTitle(Title title) {
-        this.title = title;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Copy copy = (Copy) o;
-
-        if (identifier != null ? !identifier.equals(copy.identifier) : copy.identifier != null) return false;
-        if (acquisitionDate != null ? !acquisitionDate.equals(copy.acquisitionDate) : copy.acquisitionDate != null)
-            return false;
-        return title != null ? title.equals(copy.title) : copy.title == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = identifier != null ? identifier.hashCode() : 0;
-        result = 31 * result + (acquisitionDate != null ? acquisitionDate.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        return result;
+    public void setIdTitle(String idTitle) {
+        this.idTitle = idTitle;
     }
 }

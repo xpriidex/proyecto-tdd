@@ -13,8 +13,18 @@ public class Loan {
     private String endDate;
     private String returnDate;
     private String rutBorrower;
+    private String idCopy;
 
     public Loan() {
+    }
+
+    public Loan(String identifier, String startDate, String endDate, String returnDate, String rutBorrower, String idCopy) {
+        this.identifier = identifier;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.returnDate = returnDate;
+        this.rutBorrower = rutBorrower;
+        this.idCopy = idCopy;
     }
 
     public String getIdentifier() {
@@ -57,12 +67,11 @@ public class Loan {
         this.rutBorrower = rutBorrower;
     }
 
-    public Loan(String identifier, String startDate, String endDate, String returnDate, String rutBorrower) {
+    public String getIdCopy() {
+        return idCopy;
+    }
 
-        this.identifier = identifier;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.returnDate = returnDate;
-        this.rutBorrower = rutBorrower;
+    public void setIdCopy(String idCopy) {
+        this.idCopy = idCopy;
     }
 }
