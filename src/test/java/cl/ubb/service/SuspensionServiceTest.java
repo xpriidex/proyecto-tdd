@@ -78,11 +78,6 @@ public class SuspensionServiceTest {
         suspensions.add(suspension2);
         suspensions.add(suspension3);
 
-
-
-
-
-
     }
     @Test
     public void whenGetAllIsCalledAndThreeSuspensionExistAListWithThreeItemIsReturned() throws EmptyListException {
