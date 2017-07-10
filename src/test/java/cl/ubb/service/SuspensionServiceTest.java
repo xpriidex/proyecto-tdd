@@ -43,14 +43,17 @@ public class SuspensionServiceTest {
         borrower1 = new Borrower();
         borrower1.setRut("1111111-1");
         borrower1.setName("Andres Perez");
+        suspension1= new Suspension();
 
         borrower2 = new Borrower();
         borrower2.setRut("2222222-2");
         borrower2.setName("Cristian Galvez");
+        suspension2= new Suspension();
 
         borrower3 = new Borrower();
         borrower3.setRut("3333333-3");
         borrower3.setName("Carlos Casales");
+        suspension3= new Suspension();
 
         suspension1.setIdentifier("1");
         suspension1.setDescription("atraso");
