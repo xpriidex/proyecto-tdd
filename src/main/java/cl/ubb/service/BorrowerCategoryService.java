@@ -37,9 +37,6 @@ public class BorrowerCategoryService {
         BorrowerCategory borrowerCategoryToUpdate = borrowerCategoryDao.get(borrowerCategory.getIdentifier());
         borrowerCategoryToUpdate.setName(borrowerCategory.getName());
         borrowerCategoryToUpdate.setMaxNumberOfLoans(borrowerCategory.getMaxNumberOfLoans());
-        borrowerCategoryToUpdate.setBorrowers(borrowerCategory.getBorrowers());
-        borrowerCategoryToUpdate.setLoanConditions(borrowerCategory.getLoanConditions());
-
 
         borrowerCategoryDao.update(borrowerCategoryToUpdate);
 

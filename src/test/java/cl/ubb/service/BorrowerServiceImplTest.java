@@ -76,7 +76,7 @@ public class BorrowerServiceImplTest {
         borrower1 = new Borrower();
         borrower1.setRut("1111111-1");
         borrower1.setName("Andres Perez");
-        borrower1.setBorrowerCategory(borrowerCategory);
+        borrower1.setIdBorrowerCategory("1");
         borrower1.setCellPhone("911");
         borrower1.setEmail("algo@algo.com");
 
@@ -280,7 +280,7 @@ public class BorrowerServiceImplTest {
     }
 
     // TODO: 6/19/2017 cambiar a loanservice
-    @Test
+    /*@Test
     public void checkLoanConditionUser() throws ReadErrorException, EmptyListException {
         List<LoanCondition> result;
         when(borrowerDao.exist(anyString())).thenReturn(true);
@@ -290,5 +290,5 @@ public class BorrowerServiceImplTest {
 
         assertEquals(result,loanConditions);
 
-    }
+    }*/
 }

@@ -52,9 +52,26 @@ public class SuspensionServiceTest {
         borrower3.setRut("3333333-3");
         borrower3.setName("Carlos Casales");
 
-        suspension1 = new Suspension("1","atraso","10-05-2017","5","dias",borrower1);
-        suspension2 = new Suspension("2","atraso","20-05-2017","20","dias",borrower1);
-        suspension3 = new Suspension("3","perdida","05-05-2017","1","año",borrower2);
+        suspension1.setIdentifier("1");
+        suspension1.setDescription("atraso");
+        suspension1.setStarDate("10-05-2017");
+        suspension1.setNumberOfUnitOfTime("5");
+        suspension1.setUnitOfTime("dias");
+        suspension1.setRutBorrower("1111111-1");
+
+        suspension2.setIdentifier("2");
+        suspension2.setDescription("atraso");
+        suspension2.setStarDate("20-05-2017");
+        suspension2.setNumberOfUnitOfTime("20");
+        suspension2.setUnitOfTime("dias");
+        suspension1.setRutBorrower("2222222-2");
+
+        suspension3.setIdentifier("3");
+        suspension3.setDescription("perdida");
+        suspension3.setStarDate("05-05-2017");
+        suspension3.setNumberOfUnitOfTime("1");
+        suspension3.setUnitOfTime("año");
+        suspension3.setRutBorrower("3333333-3");
 
         suspensions = new LinkedList<>();
         suspensions.add(suspension1);

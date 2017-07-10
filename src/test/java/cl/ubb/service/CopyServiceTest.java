@@ -50,7 +50,7 @@ public class CopyServiceTest {
 
         copy.setIdentifier("1");
         copy.setAcquisitionDate("20-06-2017");
-        copy.setTitle(title);
+        copy.setIdTitle("1");
 
         copies.add(copy);
     }

@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.jayway.restassured.http.ContentType.JSON;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static javax.servlet.http.HttpServletResponse.SC_CONFLICT;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
@@ -115,6 +116,18 @@ public class LoanControllerTest {
                 statusCode(SC_CREATED);
 
         Mockito.verify(loanService).create(loan1);
+    }
+
+    @Test
+    public void testFailCreateLoan() throws CreateException {
+        doThrow(new CreateException("")).when(loanService).create(loan1);
+        given().
+                contentType(JSON).
+                body(loan1).
+                when().
+                post("/loan/create").
+                then().
+                statusCode(SC_CONFLICT);
     }
 
 

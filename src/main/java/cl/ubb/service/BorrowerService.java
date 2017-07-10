@@ -24,6 +24,11 @@ public class BorrowerService {
     @Autowired
     private BorrowerDao borrowerDao;
 
+
+    @Autowired
+    private BorrowerCategoryService borrowerCategoryService;
+
+
     @Autowired
     private SuspensionService suspensionService;
 
@@ -53,12 +58,9 @@ public class BorrowerService {
         if (!borrowerDao.exist(rut))
             throw new ReadErrorException();
 
-        BorrowerCategory output = borrowerDao.get(rut).getBorrowerCategory();
+        String borrowerCategory = borrowerDao.get(rut).getIdBorrowerCategory();
 
-        // TODO: 6/13/2017  if (output==null)
-
-
-        return output;
+        return borrowerCategoryService.getBorrowerCategory(borrowerCategory);
 
 
     }
@@ -113,7 +115,7 @@ public class BorrowerService {
 
     public boolean validateAtributes(Borrower borrower1) {
         if (borrower1.getRut().equals("") || borrower1.getName().equals("") || borrower1.getCellPhone().equals("")
-                || borrower1.getEmail().equals("") || borrower1.getBorrowerCategory() == null) {
+                || borrower1.getEmail().equals("") || borrower1.getIdBorrowerCategory().equals("")) {
             return false;
         }
         return true;
@@ -156,15 +158,15 @@ public class BorrowerService {
 
         return borrowerNotHaveSuspentions;
     }
-
-    public List<LoanCondition> getLoanCondition(String rut) throws ReadErrorException, EmptyListException {
+// TODO: 10-07-2017  
+    /*public List<LoanCondition> getLoanCondition(String rut) throws ReadErrorException, EmptyListException {
         BorrowerCategory borrowerCategory = getBorrowerCategory(rut);
 
         if (borrowerCategory.getLoanConditions().size() == 0)
             throw new EmptyListException();
 
         return borrowerCategory.getLoanConditions();
-    }
+    }*/
 
     public Borrower get(String rut) throws ReadErrorException {
         if (!borrowerDao.exist(rut))

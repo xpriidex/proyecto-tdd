@@ -35,7 +35,7 @@ public class CopyService {
             throw new UpdateException();
 
         Copy copyToUpdate = copyDao.get(copy.getIdentifier());
-        copyToUpdate.setTitle(copy.getTitle());
+        copyToUpdate.setIdTitle(copy.getIdTitle());
         copyToUpdate.setAcquisitionDate(copy.getAcquisitionDate());
 
 

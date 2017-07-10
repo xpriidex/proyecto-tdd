@@ -17,11 +17,19 @@ public class Book extends Title {
     public Book() {
     }
 
-    public Book(String identifier, String name, String year, String format, String replacementCost, TitleCategory titleCategory, Subject subject, LinkedList<Copy> copies, String author, String edition, String isbn, String editorial) {
-        super(identifier, name, year, format, replacementCost, titleCategory, subject, copies);
+    public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setEdition(String edition) {
         this.edition = edition;
+    }
+
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public void setEditorial(String editorial) {
         this.editorial = editorial;
     }
 
@@ -29,32 +37,16 @@ public class Book extends Title {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getEdition() {
         return edition;
-    }
-
-    public void setEdition(String edition) {
-        this.edition = edition;
     }
 
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public String getEditorial() {
         return editorial;
-    }
-
-    public void setEditorial(String editorial) {
-        this.editorial = editorial;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class BorrowerControllerTest {
         borrower1 = new Borrower();
         borrower1.setRut("1111111-1");
         borrower1.setName("Andres Perez");
-        borrower1.setBorrowerCategory(borrowerCategory);
+        borrower1.setIdBorrowerCategory("1");
         borrower1.setCellPhone("911");
         borrower1.setEmail("algo@algo.com");
 

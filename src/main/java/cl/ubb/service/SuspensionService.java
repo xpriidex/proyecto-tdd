@@ -36,7 +36,7 @@ public class SuspensionService {
         Suspension suspensionToUpdate = suspensionDao.get(suspension.getIdentifier());
         suspensionToUpdate.setNumberOfUnitOfTime(suspension.getNumberOfUnitOfTime());
         suspensionToUpdate.setStarDate(suspension.getStarDate());
-        suspensionToUpdate.setBorrower(suspension.getBorrower());
+        suspensionToUpdate.setRutBorrower(suspension.getRutBorrower());
         suspensionToUpdate.setDescription(suspension.getDescription());
         suspensionToUpdate.setUnitOfTime(suspension.getUnitOfTime());
 
