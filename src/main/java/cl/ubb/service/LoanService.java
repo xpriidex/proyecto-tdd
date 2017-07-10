@@ -98,5 +98,13 @@ public class LoanService {
         return returnedWithDelay;
     }
 
+    // TODO: 7/5/2017 preguntar
+    public void create(Loan loan) throws CreateException {
+        if (loanDao.exist(loan.getIdentifier()))
+            throw new CreateException();
+        loanDao.create(loan);
+    }
+
+
 
 }

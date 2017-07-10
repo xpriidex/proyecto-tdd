@@ -1,6 +1,7 @@
 package cl.ubb.service;
 
 import cl.ubb.dao.LoanDao;
+import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.model.Loan;
 import cl.ubb.service.exceptions.EmptyListException;
 import org.junit.Before;
@@ -8,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.LinkedList;
@@ -41,6 +43,10 @@ public class LoanServiceTest {
         loan1 = new Loan();
         loan2 = new Loan();
         loan3 = new Loan();
+
+        loan1.setIdentifier("1");
+        loan2.setIdentifier("2");
+        loan3.setIdentifier("3");
 
         loan1.setStartDate("10-05-2017");
         loan2.setStartDate("05-05-2017");
@@ -105,6 +111,19 @@ public class LoanServiceTest {
         resp = loanService.getAllLoansThatAreDelayed("21-05-2017");
 
         assertEquals(loans, resp);
+    }
+
+    @Test
+    public void checkCreateNewLoan() throws Exception {
+        loanService.create(loan1);
+        Mockito.verify(loanDao).create(loan1);
+    }
+
+    @Test(expected = CreateException.class)
+    public void checkCreateNewLoanWhenAlreadyExists() throws Exception {
+        when(loanDao.exist(loan1.getIdentifier())).thenReturn(true);
+        loanService.create(loan1);
+
     }
 
 }

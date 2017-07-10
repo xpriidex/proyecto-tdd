@@ -259,7 +259,9 @@ public class BorrowerServiceImplTest {
     @Test
     public void checkGetBorrowersHaveSuspention() throws EmptyListException {
         List<Borrower> result;
-        when(borrowerService.getAll()).thenReturn(borrowers);
+        when(borrowerDao.getAll()).thenReturn(borrowers);
+        when(borrowerService.getAllBorrowerSuspention()).thenReturn(borrowers);
+
 
         result = borrowerService.getAllBorrowerSuspention();
 
@@ -288,13 +290,5 @@ public class BorrowerServiceImplTest {
 
         assertEquals(result,loanConditions);
 
-
-
-
     }
-
-
-
-
-
 }

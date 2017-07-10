@@ -43,7 +43,7 @@ public class BorrowerService {
 
     }
 
-    public Boolean borrowerExist(String rut){
+    public Boolean borrowerExist(String rut) {
         if (borrowerDao.exist(rut))
             return true;
         return false;
@@ -52,21 +52,18 @@ public class BorrowerService {
     public BorrowerCategory getBorrowerCategory(String rut) throws ReadErrorException {
         if (!borrowerDao.exist(rut))
             throw new ReadErrorException();
-        
-        BorrowerCategory output =  borrowerDao.get(rut).getBorrowerCategory();
+
+        BorrowerCategory output = borrowerDao.get(rut).getBorrowerCategory();
 
         // TODO: 6/13/2017  if (output==null)
 
-        
 
         return output;
 
 
-
-
     }
 
-    public boolean canBorrow(String rut, String date){
+    public boolean canBorrow(String rut, String date) {
         Boolean status;
         String finishSuspension = date;
 
@@ -77,19 +74,19 @@ public class BorrowerService {
         Calendar queryDate = Calendar.getInstance();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         boolean resp = true;
-        List <Suspension> suspensionsFiltered = new LinkedList<>();
-        for(Suspension s : suspensions){
-            if(s.getIdentifier().equals(rut)){
+        List<Suspension> suspensionsFiltered = new LinkedList<>();
+        for (Suspension s : suspensions) {
+            if (s.getIdentifier().equals(rut)) {
                 suspensionsFiltered.add(s);
             }
         }
-        for(Suspension s : suspensionsFiltered){
+        for (Suspension s : suspensionsFiltered) {
             try {
-                Date start = (Date)dateFormat.parse(s.getStarDate());
-                Date query = (Date)dateFormat.parse(date);
+                Date start = (Date) dateFormat.parse(s.getStarDate());
+                Date query = (Date) dateFormat.parse(date);
                 startDate.setTime(start);
                 queryDate.setTime(query);
-                switch (s.getUnitOfTime()){
+                switch (s.getUnitOfTime()) {
                     case "Days":
                         startDate.add(Calendar.DATE, new Integer(s.getUnitOfTime()));
                         break;
@@ -100,9 +97,9 @@ public class BorrowerService {
                         startDate.add(Calendar.YEAR, new Integer(s.getUnitOfTime()));
                         break;
                 }
-                if(queryDate.after(startDate)){
+                if (queryDate.after(startDate)) {
                     resp = true;
-                }else{
+                } else {
                     resp = false;
                 }
 
@@ -115,8 +112,8 @@ public class BorrowerService {
     }
 
     public boolean validateAtributes(Borrower borrower1) {
-        if(borrower1.getRut().equals("")||borrower1.getName().equals("")||borrower1.getCellPhone().equals("")
-                ||borrower1.getEmail().equals("")||borrower1.getBorrowerCategory()==null){
+        if (borrower1.getRut().equals("") || borrower1.getName().equals("") || borrower1.getCellPhone().equals("")
+                || borrower1.getEmail().equals("") || borrower1.getBorrowerCategory() == null) {
             return false;
         }
         return true;
@@ -133,8 +130,8 @@ public class BorrowerService {
         String date1 = format1.format(date);
 
 
-        for (Borrower borrower:allBorrower){
-            if (canBorrow(borrower.getRut(),date1))
+        for (Borrower borrower : allBorrower) {
+            if (canBorrow(borrower.getRut(), date1))
                 borrowerSuspentions.add(borrower);
         }
 
@@ -152,24 +149,24 @@ public class BorrowerService {
         String date1 = format1.format(date);
 
 
-        for (Borrower borrower:allBorrower){
-            if (!canBorrow(borrower.getRut(),date1))
+        for (Borrower borrower : allBorrower) {
+            if (!canBorrow(borrower.getRut(), date1))
                 borrowerNotHaveSuspentions.add(borrower);
         }
 
         return borrowerNotHaveSuspentions;
     }
 
-    public List <LoanCondition> getLoanCondition(String rut) throws ReadErrorException, EmptyListException {
+    public List<LoanCondition> getLoanCondition(String rut) throws ReadErrorException, EmptyListException {
         BorrowerCategory borrowerCategory = getBorrowerCategory(rut);
 
-        if (borrowerCategory.getLoanConditions().size()==0)
+        if (borrowerCategory.getLoanConditions().size() == 0)
             throw new EmptyListException();
 
         return borrowerCategory.getLoanConditions();
     }
 
-    public Borrower get(String rut)throws ReadErrorException {
+    public Borrower get(String rut) throws ReadErrorException {
         if (!borrowerDao.exist(rut))
             throw new ReadErrorException();
 

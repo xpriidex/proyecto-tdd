@@ -75,11 +75,12 @@ public class CopyService {
     public boolean exist(String id){
         return copyDao.exist(id);
     }
-   
-    public List<Copy> getAllAviableCopiesByTitleId(String id){
+
+    // TODO: 7/5/2017 crear test 
+    /*public List<Copy> getAllAviableCopiesByTitleId(String id){
         return null;
     }
     public Copy getCopyWithClosestDueOfTitleId(String id){
         return null;
-    }
+    }*/
 }
