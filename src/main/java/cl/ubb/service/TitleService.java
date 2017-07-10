@@ -55,12 +55,11 @@ public class TitleService {
             throw new ReadErrorException();
 
         Title titleToUpdate = titleDao.get(title.getIdentifier());
-        titleToUpdate.setCopies(title.getCopies());
         titleToUpdate.setFormat(title.getFormat());
         titleToUpdate.setName(title.getName());
         titleToUpdate.setReplacementCost(title.getReplacementCost());
-        titleToUpdate.setSubject(title.getSubject());
-        titleToUpdate.setTitleCategory(title.getTitleCategory());
+        titleToUpdate.setIdSubject(title.getIdSubject());
+        titleToUpdate.setIdTitleCategory(title.getIdTitleCategory());
 
         titleDao.update(titleToUpdate);
 
