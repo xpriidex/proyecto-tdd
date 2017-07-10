@@ -74,4 +74,31 @@ public class Loan {
     public void setIdCopy(String idCopy) {
         this.idCopy = idCopy;
     }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Loan loan = (Loan) o;
+
+        if (identifier != null ? !identifier.equals(loan.identifier) : loan.identifier != null) return false;
+        if (startDate != null ? !startDate.equals(loan.startDate) : loan.startDate != null) return false;
+        if (endDate != null ? !endDate.equals(loan.endDate) : loan.endDate != null) return false;
+        if (returnDate != null ? !returnDate.equals(loan.returnDate) : loan.returnDate != null) return false;
+        if (rutBorrower != null ? !rutBorrower.equals(loan.rutBorrower) : loan.rutBorrower != null) return false;
+        return idCopy != null ? idCopy.equals(loan.idCopy) : loan.idCopy == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier != null ? identifier.hashCode() : 0;
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
+        result = 31 * result + (rutBorrower != null ? rutBorrower.hashCode() : 0);
+        result = 31 * result + (idCopy != null ? idCopy.hashCode() : 0);
+        return result;
+    }
 }

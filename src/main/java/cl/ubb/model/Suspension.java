@@ -73,4 +73,31 @@ public class Suspension {
     public void setRutBorrower(String rutBorrower) {
         this.rutBorrower = rutBorrower;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Suspension that = (Suspension) o;
+
+        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (starDate != null ? !starDate.equals(that.starDate) : that.starDate != null) return false;
+        if (numberOfUnitOfTime != null ? !numberOfUnitOfTime.equals(that.numberOfUnitOfTime) : that.numberOfUnitOfTime != null)
+            return false;
+        if (unitOfTime != null ? !unitOfTime.equals(that.unitOfTime) : that.unitOfTime != null) return false;
+        return rutBorrower != null ? rutBorrower.equals(that.rutBorrower) : that.rutBorrower == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier != null ? identifier.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (starDate != null ? starDate.hashCode() : 0);
+        result = 31 * result + (numberOfUnitOfTime != null ? numberOfUnitOfTime.hashCode() : 0);
+        result = 31 * result + (unitOfTime != null ? unitOfTime.hashCode() : 0);
+        result = 31 * result + (rutBorrower != null ? rutBorrower.hashCode() : 0);
+        return result;
+    }
 }

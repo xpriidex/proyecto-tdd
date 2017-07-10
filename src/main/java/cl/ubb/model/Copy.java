@@ -43,4 +43,25 @@ public class Copy {
     public void setIdTitle(String idTitle) {
         this.idTitle = idTitle;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Copy copy = (Copy) o;
+
+        if (identifier != null ? !identifier.equals(copy.identifier) : copy.identifier != null) return false;
+        if (acquisitionDate != null ? !acquisitionDate.equals(copy.acquisitionDate) : copy.acquisitionDate != null)
+            return false;
+        return idTitle != null ? idTitle.equals(copy.idTitle) : copy.idTitle == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier != null ? identifier.hashCode() : 0;
+        result = 31 * result + (acquisitionDate != null ? acquisitionDate.hashCode() : 0);
+        result = 31 * result + (idTitle != null ? idTitle.hashCode() : 0);
+        return result;
+    }
 }

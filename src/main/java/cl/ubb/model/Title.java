@@ -84,5 +84,33 @@ public class Title {
         this.idSubject = idSubject;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Title title = (Title) o;
+
+        if (identifier != null ? !identifier.equals(title.identifier) : title.identifier != null) return false;
+        if (name != null ? !name.equals(title.name) : title.name != null) return false;
+        if (year != null ? !year.equals(title.year) : title.year != null) return false;
+        if (format != null ? !format.equals(title.format) : title.format != null) return false;
+        if (replacementCost != null ? !replacementCost.equals(title.replacementCost) : title.replacementCost != null)
+            return false;
+        if (idTitleCategory != null ? !idTitleCategory.equals(title.idTitleCategory) : title.idTitleCategory != null)
+            return false;
+        return idSubject != null ? idSubject.equals(title.idSubject) : title.idSubject == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier != null ? identifier.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (year != null ? year.hashCode() : 0);
+        result = 31 * result + (format != null ? format.hashCode() : 0);
+        result = 31 * result + (replacementCost != null ? replacementCost.hashCode() : 0);
+        result = 31 * result + (idTitleCategory != null ? idTitleCategory.hashCode() : 0);
+        result = 31 * result + (idSubject != null ? idSubject.hashCode() : 0);
+        return result;
+    }
 }

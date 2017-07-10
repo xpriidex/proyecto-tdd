@@ -83,5 +83,34 @@ public class LoanCondition {
     public void setIdTitleCategory(String idTitleCategory) {
         this.idTitleCategory = idTitleCategory;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LoanCondition that = (LoanCondition) o;
+
+        if (maxNumberOfUnitOfTime != that.maxNumberOfUnitOfTime) return false;
+        if (maxNumberOfRenewals != that.maxNumberOfRenewals) return false;
+        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
+        if (unitOfTime != null ? !unitOfTime.equals(that.unitOfTime) : that.unitOfTime != null) return false;
+        if (fee != null ? !fee.equals(that.fee) : that.fee != null) return false;
+        if (idBorrowerCategory != null ? !idBorrowerCategory.equals(that.idBorrowerCategory) : that.idBorrowerCategory != null)
+            return false;
+        return idTitleCategory != null ? idTitleCategory.equals(that.idTitleCategory) : that.idTitleCategory == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier != null ? identifier.hashCode() : 0;
+        result = 31 * result + maxNumberOfUnitOfTime;
+        result = 31 * result + maxNumberOfRenewals;
+        result = 31 * result + (unitOfTime != null ? unitOfTime.hashCode() : 0);
+        result = 31 * result + (fee != null ? fee.hashCode() : 0);
+        result = 31 * result + (idBorrowerCategory != null ? idBorrowerCategory.hashCode() : 0);
+        result = 31 * result + (idTitleCategory != null ? idTitleCategory.hashCode() : 0);
+        return result;
+    }
 }
 
