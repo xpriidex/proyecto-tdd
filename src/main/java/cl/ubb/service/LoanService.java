@@ -2,6 +2,7 @@ package cl.ubb.service;
 
 import cl.ubb.dao.LoanDao;
 import cl.ubb.dao.exceptions.CreateException;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Loan;
 import cl.ubb.service.exceptions.EmptyListException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,12 @@ public class LoanService {
         if (loanDao.exist(loan.getIdentifier()))
             throw new CreateException();
         loanDao.create(loan);
+    }
+    public Loan getId(String id) throws ReadErrorException {
+        if (!loanDao.exist(id))
+            throw new ReadErrorException();
+
+        return loanDao.get(id);
     }
 
 
