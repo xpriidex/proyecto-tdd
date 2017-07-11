@@ -25,19 +25,19 @@ public class BorrowerCategoryController {
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<BorrowerCategory> getBorrowerCategoryById(@PathVariable("id") String id) throws ReadErrorException {
-        return new ResponseEntity<BorrowerCategory>(borrowerCategoryService.getBorrowerCategory(id),OK);
+        return new ResponseEntity<BorrowerCategory>(borrowerCategoryService.get(id),OK);
     }
 
     @GetMapping("/list")
     @ResponseBody
     public ResponseEntity<List<BorrowerCategory>> getAllBorrowerCategory() throws EmptyListException {
-        return new ResponseEntity<List <BorrowerCategory>>(borrowerCategoryService.getAllBorrowerCategory(),OK);
+        return new ResponseEntity<List <BorrowerCategory>>(borrowerCategoryService.getAll(),OK);
     }
 
     @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<BorrowerCategory> createBorrowerCategory(@RequestBody BorrowerCategory borrowerCategory) throws CreateException {
-        borrowerCategoryService.createBorrowerCategory(borrowerCategory);
+        borrowerCategoryService.create(borrowerCategory);
         return new ResponseEntity<BorrowerCategory>(borrowerCategory,CREATED);
     }
 

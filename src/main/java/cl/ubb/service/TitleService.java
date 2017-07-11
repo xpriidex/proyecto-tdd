@@ -30,13 +30,13 @@ public class TitleService {
         for(Title title : output){
             title.setReplacementCost("");
         }
-
         return output;
     }
 
     public void create(Title title) throws CreateException {
         if (titleDao.exist(title.getIdentifier()))
             throw new CreateException();
+
         titleDao.create(title);
     }
 
@@ -70,6 +70,7 @@ public class TitleService {
     public Title get(String id) throws ReadErrorException {
         if (!titleDao.exist(id))
             throw new ReadErrorException();
+
         return titleDao.get(id);
     }
 
@@ -78,6 +79,7 @@ public class TitleService {
         if (CollectionUtils.isEmpty(titles)) {
             throw new EmptyListException();
         }
+
         return titles;
     }
 }

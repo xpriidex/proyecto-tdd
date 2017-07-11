@@ -55,8 +55,6 @@ public class CopyServiceTest {
         copies.add(copy);
     }
 
-
-
     @Test
     public void checkCreateNewCopy() throws Exception {
         Mockito.when(copyDao.exist(copy.getIdentifier()))
@@ -161,7 +159,4 @@ public class CopyServiceTest {
         Mockito.when(copyDao.exist(copy.getIdentifier())).thenReturn(false);
         copyService.update(copy);
     }
-
-
-
 }

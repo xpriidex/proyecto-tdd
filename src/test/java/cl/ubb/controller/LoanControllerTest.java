@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.xml.ws.Service;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -72,7 +70,7 @@ public class LoanControllerTest {
 
     @Test
     public void testGetLoanById() throws ReadErrorException {
-        when(loanService.getId(anyString())).thenReturn(loan1);
+        when(loanService.get(anyString())).thenReturn(loan1);
         given().
                 when().
                 get("/loan/{id}", 1).
@@ -83,7 +81,7 @@ public class LoanControllerTest {
     }
     @Test
     public void testGetLoanByIdNotExist() throws ReadErrorException {
-        doThrow(new ReadErrorException("")).when(loanService).getId(anyString());
+        doThrow(new ReadErrorException("")).when(loanService).get(anyString());
         given().
                 contentType(JSON).
                 when().
@@ -105,7 +103,6 @@ public class LoanControllerTest {
 
     @Test
     public void testCreateLoan() throws CreateException {
-        loanService.create(loan1);
         given().
                 contentType(JSON).
                 body(loan1).

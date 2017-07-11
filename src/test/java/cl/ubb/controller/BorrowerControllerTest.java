@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.LinkedList;
@@ -131,16 +132,20 @@ public class BorrowerControllerTest {
                 statusCode(SC_NOT_FOUND);
     }
     @Test
-    public void testCreateBorrower(){
+    public void testCreateBorrower() throws CreateException {
         given().
                 contentType(JSON).
                 body(borrower1).
                 when().
-                post("/borrower/").
+                post("/borrower/create").
                 then().
                 assertThat().
                 body("rut",equalTo(borrower1.getRut())).
                 statusCode(SC_CREATED);
+
+        Mockito.verify(borrowerService).create(borrower1);
+
+
     }
 
     @Test

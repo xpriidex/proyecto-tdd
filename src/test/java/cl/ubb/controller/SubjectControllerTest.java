@@ -100,11 +100,11 @@ public class SubjectControllerTest {
     public void testGetAll() throws EmptyListException {
          when(subjectService.getAll()).thenReturn((LinkedList<Subject>) subjects);
          given().
+                 contentType(JSON).
                  when().
                  get("/subject/list").
                  then().
                  assertThat().
-                 body("identifier[0]",equalTo("1001")).
                  statusCode(SC_OK);
     }
 

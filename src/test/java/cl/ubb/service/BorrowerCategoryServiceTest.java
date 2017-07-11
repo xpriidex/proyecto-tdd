@@ -54,7 +54,7 @@ public class BorrowerCategoryServiceTest {
         Mockito.when(borrowerCategoryDao.exist(borrowerCategory.getIdentifier()))
                 .thenReturn(false);
 
-        borrowerCategoryService.createBorrowerCategory(borrowerCategory);
+        borrowerCategoryService.create(borrowerCategory);
         Mockito.verify(borrowerCategoryDao).create(borrowerCategory);
     }
 
@@ -63,7 +63,7 @@ public class BorrowerCategoryServiceTest {
         Mockito.when(borrowerCategoryDao.exist(borrowerCategory.getIdentifier()))
                 .thenReturn(true);
 
-        borrowerCategoryService.createBorrowerCategory(borrowerCategory);
+        borrowerCategoryService.create(borrowerCategory);
 
     }
 
@@ -75,7 +75,7 @@ public class BorrowerCategoryServiceTest {
                 .thenReturn(borrowerCategory);
         BorrowerCategory result;
 
-        result = borrowerCategoryService.deleteBorrowerCategory(borrowerCategory.getIdentifier());
+        result = borrowerCategoryService.delete(borrowerCategory.getIdentifier());
 
         Mockito.verify(borrowerCategoryDao).delete(borrowerCategory.getIdentifier());
         assertEquals(result,borrowerCategory);
@@ -85,7 +85,7 @@ public class BorrowerCategoryServiceTest {
     public void checkDeleteInvalidBorrowerCategoryId() throws Exception {
         Mockito.when(borrowerCategoryDao.exist(borrowerCategory.getIdentifier()))
                 .thenReturn(false);
-        borrowerCategoryService.deleteBorrowerCategory(borrowerCategory.getIdentifier());
+        borrowerCategoryService.delete(borrowerCategory.getIdentifier());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class BorrowerCategoryServiceTest {
         Mockito.when(borrowerCategoryDao.exist(borrowerCategory.getIdentifier())).thenReturn(true);
         Mockito.when(borrowerCategoryDao.get(borrowerCategory.getIdentifier())).thenReturn(borrowerCategory);
 
-        BorrowerCategory result = borrowerCategoryService.getBorrowerCategory(borrowerCategory.getIdentifier());
+        BorrowerCategory result = borrowerCategoryService.get(borrowerCategory.getIdentifier());
 
         Assert.assertEquals(borrowerCategory,result);
     }
@@ -101,19 +101,19 @@ public class BorrowerCategoryServiceTest {
     @Test(expected = ReadErrorException.class)
     public void checkGetInvalidBorrowerCategory() throws Exception, ReadErrorException {
         Mockito.when(borrowerCategoryDao.exist(borrowerCategory.getIdentifier())).thenReturn(false);
-        borrowerCategoryService.getBorrowerCategory(borrowerCategory.getIdentifier());
+        borrowerCategoryService.get(borrowerCategory.getIdentifier());
     }
 
     @Test
     public void checkReadAllBorrowerCategory() throws Exception {
         Mockito.when(borrowerCategoryDao.getAll()).thenReturn(borrowerCategories);
-        Assert.assertEquals(borrowerCategoryService.getAllBorrowerCategory(),borrowerCategories);
+        Assert.assertEquals(borrowerCategoryService.getAll(),borrowerCategories);
     }
 
     @Test(expected = EmptyListException.class)
     public void checkReadAllWhenNullBorrowerCategory() throws Exception {
         Mockito.when(borrowerCategoryDao.getAll()).thenReturn(null);
-        borrowerCategoryService.getAllBorrowerCategory();
+        borrowerCategoryService.getAll();
     }
 
     @Test
@@ -139,7 +139,7 @@ public class BorrowerCategoryServiceTest {
         when(borrowerCategoryDao.exist(borrowerCategory.getIdentifier())).thenReturn(true);
         when(borrowerCategoryDao.get(borrowerCategory.getIdentifier())).thenReturn(borrowerCategoryToUpdate);
 
-        BorrowerCategory result = borrowerCategoryService.updateBorrowerCategory(borrowerCategoryToUpdate);
+        BorrowerCategory result = borrowerCategoryService.update(borrowerCategoryToUpdate);
 
         verify(borrowerCategoryDao).update(borrowerCategoryToUpdate);
 
@@ -150,7 +150,7 @@ public class BorrowerCategoryServiceTest {
     @Test(expected = UpdateException.class)
     public void checkUpdateWhenBorrowerCategoryNotExist() throws Exception {
         Mockito.when(borrowerCategoryDao.exist(borrowerCategory.getIdentifier())).thenReturn(false);
-        borrowerCategoryService.updateBorrowerCategory(borrowerCategory);
+        borrowerCategoryService.update(borrowerCategory);
     }
 
 

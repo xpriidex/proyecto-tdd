@@ -27,7 +27,6 @@ public class CopyService {
             throw new CreateException();
 
         copyDao.create(copy);
-
     }
 
     public Copy update(Copy copy)throws UpdateException{
@@ -37,7 +36,6 @@ public class CopyService {
         Copy copyToUpdate = copyDao.get(copy.getIdentifier());
         copyToUpdate.setIdTitle(copy.getIdTitle());
         copyToUpdate.setAcquisitionDate(copy.getAcquisitionDate());
-
 
         copyDao.update(copyToUpdate);
 
@@ -53,7 +51,6 @@ public class CopyService {
         copyDao.delete(id);
 
         return ouput;
-
     }
 
     public Copy get(String id) throws ReadErrorException {

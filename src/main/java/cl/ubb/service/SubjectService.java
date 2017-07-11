@@ -47,6 +47,7 @@ public class SubjectService {
     public void create(Subject subject) throws CreateException {
         if (!subjectDao.exist(subject.getIdentifier()))
             throw new CreateException();
+
         subjectDao.create(subject);
     }
 
@@ -61,7 +62,5 @@ public class SubjectService {
         subjectDao.update(subjectToUpdate);
 
         return subjectToUpdate;
-
-
     }
 }

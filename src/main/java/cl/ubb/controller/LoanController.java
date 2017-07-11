@@ -25,7 +25,7 @@ public class LoanController {
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Loan> getLoanById(@PathVariable("id") String id) throws ReadErrorException {
-        return new ResponseEntity<Loan>(loanService.getId(id),OK);
+        return new ResponseEntity<Loan>(loanService.get(id),OK);
     }
 
     @GetMapping("/list")

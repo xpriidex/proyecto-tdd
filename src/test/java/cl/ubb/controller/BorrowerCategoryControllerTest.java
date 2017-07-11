@@ -20,14 +20,10 @@ import java.util.List;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static org.apache.http.HttpStatus.SC_CONFLICT;
-import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -68,20 +64,23 @@ public class BorrowerCategoryControllerTest {
 
     @Test
     public void testGetBorrowerCategoryById() throws ReadErrorException {
-        when(borrowerCategoryService.getBorrowerCategory("111")).thenReturn(borrowerCategory1);
+        when(borrowerCategoryService.get("111")).thenReturn(borrowerCategory1);
         given().
                 contentType(JSON).
                 when().
-                get("/borrowerCategory/{id}", 1).
+                get("/borrowerCategory/{id}", 111).
                 then().
                 assertThat().
                 body("identifier", equalTo(borrowerCategory1.getIdentifier())).
                 statusCode(SC_OK);
+
+        Mockito.verify(borrowerCategoryService).get("111");
+
     }
 
     @Test
     public void testGetBorrowerCategoryByIdNotExist() throws ReadErrorException {
-        doThrow(new ReadErrorException("")).when(borrowerCategoryService).getBorrowerCategory(anyString());
+        doThrow(new ReadErrorException("")).when(borrowerCategoryService).get(anyString());
         given().
                 contentType(JSON).
                 when().
@@ -92,7 +91,7 @@ public class BorrowerCategoryControllerTest {
 
     @Test
     public void testBorrowerGetAll() throws EmptyListException {
-        when(borrowerCategoryService.getAllBorrowerCategory()).thenReturn(borrowerCategories);
+        when(borrowerCategoryService.getAll()).thenReturn(borrowerCategories);
         given().
                 when().
                 get("/borrowerCategory/list").
@@ -104,7 +103,7 @@ public class BorrowerCategoryControllerTest {
 
     @Test
     public void testGetAllBorrowerCategoryWhenEmptyListException() throws EmptyListException {
-        doThrow(new EmptyListException("")).when(borrowerCategoryService).getAllBorrowerCategory();
+        doThrow(new EmptyListException("")).when(borrowerCategoryService).getAll();
         given().
                 contentType(JSON).
                 when().
@@ -124,12 +123,12 @@ public class BorrowerCategoryControllerTest {
                 assertThat().
                 statusCode(SC_CREATED);
 
-        Mockito.verify(borrowerCategoryService).createBorrowerCategory(borrowerCategory1);
+        Mockito.verify(borrowerCategoryService).create(borrowerCategory1);
     }
 
     @Test
     public void testCreateBorrowerCategoryWhenAlreadyExist() throws CreateException {
-        doThrow(new CreateException("")).when(borrowerCategoryService).createBorrowerCategory(borrowerCategory1);
+        doThrow(new CreateException("")).when(borrowerCategoryService).create(borrowerCategory1);
         given().
                 contentType(JSON).
                 body(borrowerCategory1).
@@ -138,6 +137,4 @@ public class BorrowerCategoryControllerTest {
                 then().
                 statusCode(SC_CONFLICT);
     }
-
-
 }

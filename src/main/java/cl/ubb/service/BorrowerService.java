@@ -5,7 +5,6 @@ import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Borrower;
 import cl.ubb.model.BorrowerCategory;
-import cl.ubb.model.LoanCondition;
 import cl.ubb.model.Suspension;
 import cl.ubb.service.exceptions.EmptyListException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,8 @@ public class BorrowerService {
     @Autowired
     private BorrowerDao borrowerDao;
 
-
     @Autowired
     private BorrowerCategoryService borrowerCategoryService;
-
 
     @Autowired
     private SuspensionService suspensionService;
@@ -38,14 +35,13 @@ public class BorrowerService {
             throw new EmptyListException();
 
         return output;
-
     }
 
     public void create(Borrower borrower) throws CreateException {
         if (borrowerDao.exist(borrower.getRut()))
             throw new CreateException();
+        
         borrowerDao.create(borrower);
-
     }
 
     public Boolean borrowerExist(String rut) {
@@ -60,9 +56,7 @@ public class BorrowerService {
 
         String borrowerCategory = borrowerDao.get(rut).getIdBorrowerCategory();
 
-        return borrowerCategoryService.getBorrowerCategory(borrowerCategory);
-
-
+        return borrowerCategoryService.get(borrowerCategory);
     }
 
     public boolean canBorrow(String rut, String date) {
@@ -150,7 +144,6 @@ public class BorrowerService {
         SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
         String date1 = format1.format(date);
 
-
         for (Borrower borrower : allBorrower) {
             if (!canBorrow(borrower.getRut(), date1))
                 borrowerNotHaveSuspentions.add(borrower);
@@ -174,4 +167,7 @@ public class BorrowerService {
 
         return borrowerDao.get(rut);
     }
+
+    // TODO: 7/10/2017 update 
 }
+ 

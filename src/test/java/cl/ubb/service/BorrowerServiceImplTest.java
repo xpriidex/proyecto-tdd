@@ -20,6 +20,7 @@ import java.util.List;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -38,6 +39,9 @@ public class BorrowerServiceImplTest {
     private LoanCondition loanCondition2;
     private List<LoanCondition> loanConditions;
     private UnitOfTime unitOfTime;
+
+    @Mock
+    private BorrowerCategoryService borrowerCategoryService;
 
     @Mock
     private BorrowerDao borrowerDao;
@@ -117,11 +121,12 @@ public class BorrowerServiceImplTest {
         assertEquals(3,resp.size());
     }
 
-    @Test
+    @Test(expected = EmptyListException.class)
     public void WhenNotBorrowerExistGetAllShoultReturnEmptyList() throws EmptyListException {
+        LinkedList<Borrower> output = new LinkedList<>();
         LinkedList<Borrower> result;
-        LinkedList<Borrower> borrowers = new LinkedList<>();
-        when(borrowerDao.getAll()).thenReturn(borrowers);
+
+        when(borrowerDao.getAll()).thenReturn(output);
         result=(LinkedList<Borrower>)borrowerService.getAll();
         assertEquals(0,result.size());
 
@@ -229,11 +234,15 @@ public class BorrowerServiceImplTest {
 
     @Test
     public void checkBorrowerCategory() throws  ReadErrorException {
-        BorrowerCategory borrowerCategory;
+        BorrowerCategory borrowerCategory1,borrowerCategory2;
+        borrowerCategory1 = new BorrowerCategory();
+        borrowerCategory1.setIdentifier("1");
+
         when(borrowerDao.exist(borrower1.getRut())).thenReturn(true);
         when(borrowerDao.get(borrower1.getRut())).thenReturn(borrower1);
+        when(borrowerCategoryService.get(anyString())).thenReturn(borrowerCategory1);
 
-        borrowerCategory=borrowerService.getBorrowerCategory(borrower1.getRut());
+        borrowerCategory2=borrowerService.getBorrowerCategory(borrower1.getRut());
 
         assertEquals("postgrado",borrowerCategory.getName());
     }
@@ -259,7 +268,6 @@ public class BorrowerServiceImplTest {
     public void checkGetBorrowersHaveSuspention() throws EmptyListException {
         List<Borrower> result;
         when(borrowerDao.getAll()).thenReturn(borrowers);
-        when(borrowerService.getAllBorrowerSuspention()).thenReturn(borrowers);
 
         result = borrowerService.getAllBorrowerSuspention();
 
@@ -270,11 +278,11 @@ public class BorrowerServiceImplTest {
     @Test
     public void checkGetBorrowersHaveNotSuspention() throws EmptyListException {
         List<Borrower> result;
-        List<Borrower> filter = new ArrayList<>();
+        when(borrowerDao.getAll()).thenReturn(borrowers);
 
         result = borrowerService.getAllBorrowerNotHaveSuspention();
 
-        assertEquals(result,filter);
+        assertEquals(result,borrowers);
     }
 
     // TODO: 6/19/2017 cambiar a loanservice

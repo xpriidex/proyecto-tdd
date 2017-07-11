@@ -22,15 +22,14 @@ public class BorrowerCategoryService {
     @Autowired
     private BorrowerCategoryDao borrowerCategoryDao;
 
-    public void createBorrowerCategory(BorrowerCategory borrowerCategory)throws CreateException{
+    public void create(BorrowerCategory borrowerCategory)throws CreateException{
         if (borrowerCategoryDao.exist(borrowerCategory.getIdentifier()))
             throw new CreateException();
 
         borrowerCategoryDao.create(borrowerCategory);
-
     }
 
-    public BorrowerCategory updateBorrowerCategory(BorrowerCategory borrowerCategory)throws UpdateException{
+    public BorrowerCategory update(BorrowerCategory borrowerCategory)throws UpdateException{
         if (!borrowerCategoryDao.exist(borrowerCategory.getIdentifier()))
             throw new UpdateException();
 
@@ -43,7 +42,7 @@ public class BorrowerCategoryService {
         return borrowerCategoryToUpdate;
     }
 
-    public BorrowerCategory deleteBorrowerCategory(String id)throws DeleteException{
+    public BorrowerCategory delete(String id)throws DeleteException{
         if (!borrowerCategoryDao.exist(id))
             throw new DeleteException();
 
@@ -55,14 +54,14 @@ public class BorrowerCategoryService {
 
     }
 
-    public BorrowerCategory getBorrowerCategory(String id) throws ReadErrorException {
+    public BorrowerCategory get(String id) throws ReadErrorException {
         if (!borrowerCategoryDao.exist(id))
             throw new ReadErrorException();
         return borrowerCategoryDao.get(id);
 
     }
 
-    public List<BorrowerCategory> getAllBorrowerCategory() throws EmptyListException {
+    public List<BorrowerCategory> getAll() throws EmptyListException {
         List<BorrowerCategory> borrowerCategories = borrowerCategoryDao.getAll();
         if (CollectionUtils.isEmpty(borrowerCategories)) {
             throw new EmptyListException();

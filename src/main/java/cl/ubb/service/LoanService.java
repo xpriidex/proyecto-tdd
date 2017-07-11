@@ -44,7 +44,6 @@ public class LoanService {
         }
     }
 
-
     public List<Loan> getAllLoansThatAreDelayed(String date) {
         List<Loan> beforeFilter = loanDao.getAll();
         List<Loan> filtered = new LinkedList<>();
@@ -105,12 +104,14 @@ public class LoanService {
             throw new CreateException();
         loanDao.create(loan);
     }
-    public Loan getId(String id) throws ReadErrorException {
+    public Loan get(String id) throws ReadErrorException {
         if (!loanDao.exist(id))
             throw new ReadErrorException();
 
         return loanDao.get(id);
     }
+
+    // TODO: 7/10/2017 update 
 
 
 
