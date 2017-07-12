@@ -70,7 +70,6 @@ public class CopyServiceTest {
                 .thenReturn(true);
 
         copyService.create(copy);
-
     }
 
     @Test

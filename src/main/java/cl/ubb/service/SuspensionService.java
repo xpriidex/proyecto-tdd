@@ -77,6 +77,7 @@ public class SuspensionService {
         return suspensionDao.exist(id);
     }
 
+    // TODO: 7/12/2017
     public List <Suspension> getAllSuspensionByRut(String rut) {
         return null;
     }

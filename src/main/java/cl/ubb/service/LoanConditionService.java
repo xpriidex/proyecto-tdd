@@ -35,14 +35,14 @@ public class LoanConditionService {
     }
 
     public void create(LoanCondition loanCondition) throws CreateException {
-        if (!loanConditionDao.exist(loanCondition.getIdentifier()))
+        if (loanConditionDao.exist(loanCondition.getIdentifier()))
             throw new CreateException();
         loanConditionDao.create(loanCondition);
     }
 
     public LoanCondition update(LoanCondition loanCondition) throws ReadErrorException, UpdateException {
         if (!loanConditionDao.exist(loanCondition.getIdentifier()))
-            throw new ReadErrorException();
+            throw new UpdateException();
 
         LoanCondition loanConditionToUpdate = loanConditionDao.get(loanCondition.getIdentifier());
         loanConditionToUpdate.setMaxNumberOfUnitOfTime(loanCondition.getMaxNumberOfUnitOfTime());

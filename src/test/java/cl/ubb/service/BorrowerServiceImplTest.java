@@ -5,11 +5,13 @@ import cl.ubb.dao.exceptions.CreateException;
 import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.*;
 import cl.ubb.service.exceptions.EmptyListException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -283,6 +285,22 @@ public class BorrowerServiceImplTest {
         result = borrowerService.getAllBorrowerNotHaveSuspention();
 
         assertEquals(result,borrowers);
+    }
+
+    @Test
+    public void checkGetBorrower() throws ReadErrorException {
+        Mockito.when(borrowerDao.exist(borrower1.getRut())).thenReturn(true);
+        Mockito.when(borrowerService.get(borrower1.getRut())).thenReturn(borrower1);
+
+        Borrower result = borrowerDao.get(borrower1.getRut());
+
+        Assert.assertEquals(borrower1, result);
+    }
+
+    @Test(expected = ReadErrorException.class)
+    public void checkGetBorrowerDontExist() throws Exception, ReadErrorException {
+        Mockito.when(borrowerDao.exist(borrower1.getRut())).thenReturn(false);
+        borrowerService.get(borrower1.getRut());
     }
 
     // TODO: 6/19/2017 cambiar a loanservice
