@@ -114,7 +114,7 @@ public class SubjectControllerTest {
         given().
                 contentType(JSON).
                 when().
-                get("/subject").
+                get("/subject/list").
                 then().
                 statusCode(SC_NOT_FOUND);
     }

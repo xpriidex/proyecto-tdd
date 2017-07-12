@@ -5,6 +5,7 @@ package cl.ubb.model;
  */
 public class SuspensionRules {
 
+    private String identifier;
     private String delayUnitOfTime;
     private String suspensionUnitOfTime;
     private String unitOfTime;
@@ -12,10 +13,19 @@ public class SuspensionRules {
     public SuspensionRules() {
     }
 
-    public SuspensionRules(String delayUnitOfTime, String suspensionUnitOfTime, String unitOfTime) {
+    public SuspensionRules(String identifier, String delayUnitOfTime, String suspensionUnitOfTime, String unitOfTime) {
+        this.identifier = identifier;
         this.delayUnitOfTime = delayUnitOfTime;
         this.suspensionUnitOfTime = suspensionUnitOfTime;
         this.unitOfTime = unitOfTime;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getDelayUnitOfTime() {
@@ -49,6 +59,7 @@ public class SuspensionRules {
 
         SuspensionRules that = (SuspensionRules) o;
 
+        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
         if (delayUnitOfTime != null ? !delayUnitOfTime.equals(that.delayUnitOfTime) : that.delayUnitOfTime != null)
             return false;
         if (suspensionUnitOfTime != null ? !suspensionUnitOfTime.equals(that.suspensionUnitOfTime) : that.suspensionUnitOfTime != null)
@@ -58,7 +69,8 @@ public class SuspensionRules {
 
     @Override
     public int hashCode() {
-        int result = delayUnitOfTime != null ? delayUnitOfTime.hashCode() : 0;
+        int result = identifier != null ? identifier.hashCode() : 0;
+        result = 31 * result + (delayUnitOfTime != null ? delayUnitOfTime.hashCode() : 0);
         result = 31 * result + (suspensionUnitOfTime != null ? suspensionUnitOfTime.hashCode() : 0);
         result = 31 * result + (unitOfTime != null ? unitOfTime.hashCode() : 0);
         return result;

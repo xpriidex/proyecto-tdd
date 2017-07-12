@@ -31,7 +31,7 @@ public class SubjectController {
         return new ResponseEntity<Subject>(subjectService.get(id),OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     @ResponseBody
     public ResponseEntity<List <Subject>> getAllSubject() throws ReadErrorException, EmptyListException {
         return new ResponseEntity<List <Subject>>(subjectService.getAll(),OK);
