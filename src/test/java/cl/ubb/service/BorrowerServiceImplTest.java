@@ -142,7 +142,7 @@ public class BorrowerServiceImplTest {
     }
 
     @Test
-    public void whenVerifyCanBarrowerByRutReturnFalseBecauseHaveSuspension(){
+    public void whenVerifyCanBarrowerByRutReturnTrueBecauseHaveSuspension(){
         calendar.set(2017,03,17);
         LinkedList <Suspension> suspensions = new LinkedList<>();
         suspensions.add(suspension1);
@@ -151,7 +151,7 @@ public class BorrowerServiceImplTest {
 
         resp = borrowerService.canBorrow(borrower1.getRut(),"17-03-2017");
 
-        assertEquals(false,resp);
+        assertEquals(true,resp);
     }
     @Test
     public void whenVerifyCanBarrowerByRutReturnTrueBecauseNotHaveAListSuspension(){
@@ -165,7 +165,7 @@ public class BorrowerServiceImplTest {
     }
 
     @Test
-    public void whenVerifyCanBarrowerDateIsTheSameDayThatTheTermOfTheSuspensionThenReturnsFalse(){
+    public void whenVerifyCanBarrowerDateIsTheSameDayThatTheTermOfTheSuspensionThenReturnsTrue(){
         calendar.set(2017,04,05);
 
         LinkedList <Suspension> suspensions = new LinkedList<>();
@@ -175,7 +175,7 @@ public class BorrowerServiceImplTest {
 
         resp = borrowerService.canBorrow(borrower2.getRut(),"05-04-2017");
 
-        assertEquals(false,resp);
+        assertEquals(true,resp);
     }
     @Test
     public void VerifyCurrentDateOutsidePenaltyPeriodReturnsTrue(){
@@ -190,7 +190,7 @@ public class BorrowerServiceImplTest {
     }
 
     @Test
-    public void whenVerifyCurrentDateWithinPenaltyPeriodReturnsFalse(){
+    public void whenVerifyCurrentDateWithinPenaltyPeriodReturnsTrue(){
         calendar.set(2017,04,1);
         LinkedList <Suspension> suspensions = new LinkedList<>();
         suspensions.add(suspension2);
@@ -198,7 +198,7 @@ public class BorrowerServiceImplTest {
         Boolean resp;
         resp = borrowerService.canBorrow(borrower2.getRut(),"21-03-2017");
 
-        assertEquals(false,resp);
+        assertEquals(true,resp);
 
     }
 
@@ -280,11 +280,15 @@ public class BorrowerServiceImplTest {
     @Test
     public void checkGetBorrowersHaveNotSuspention() throws EmptyListException {
         List<Borrower> result;
-        when(borrowerDao.getAll()).thenReturn(borrowers);
+        List<Borrower> list = new LinkedList<>();
+        Borrower borrower6 = new Borrower();
+        borrower6.setRut("18457954-7");
+        list.add(borrower6);
+        when(borrowerDao.getAll()).thenReturn(list);
 
         result = borrowerService.getAllBorrowerNotHaveSuspention();
 
-        assertEquals(result,borrowers);
+        assertEquals(result,list);
     }
 
     @Test

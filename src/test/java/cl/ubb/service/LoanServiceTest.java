@@ -2,8 +2,10 @@ package cl.ubb.service;
 
 import cl.ubb.dao.LoanDao;
 import cl.ubb.dao.exceptions.CreateException;
+import cl.ubb.dao.exceptions.ReadErrorException;
 import cl.ubb.model.Loan;
 import cl.ubb.service.exceptions.EmptyListException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -124,6 +126,20 @@ public class LoanServiceTest {
         when(loanDao.exist(loan1.getIdentifier())).thenReturn(true);
         loanService.create(loan1);
 
+    }
+    @Test
+    public void checkGetloan() throws Exception, ReadErrorException {
+        Mockito.when(loanDao.exist(loan1.getIdentifier())).thenReturn(true);
+        Mockito.when(loanDao.get(loan1.getIdentifier())).thenReturn(loan1);
+
+        Loan result = loanService.get(loan1.getIdentifier());
+
+        Assert.assertEquals(loan1,result);
+    }
+    @Test(expected = ReadErrorException.class)
+    public void checkGetInvalidLoan() throws Exception, ReadErrorException {
+        Mockito.when(loanDao.exist(loan1.getIdentifier())).thenReturn(false);
+        loanService.get(loan1.getIdentifier());
     }
 
 }
