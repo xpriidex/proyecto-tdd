@@ -133,6 +133,30 @@ public class SuspensionServiceTest {
     }
 
     @Test
+    public void whenGetAllSuspensionByRut() throws EmptyListException {
+        List<Suspension> result;
+        when(suspensionDao.getAll()).thenReturn(suspensions);
+        when(suspensionService.getAll()).thenReturn(suspensions);
+
+        result = suspensionService.getAllSuspensionByRut("11111111-1");
+
+        assertEquals(1,result.size());
+    }
+
+    @Test (expected = EmptyListException.class)
+    public void whenGetAllSuspensionByRutNotHaveSuspension() throws Exception {
+        List<Suspension> result = new LinkedList<>();
+
+        when(suspensionDao.getAll()).thenReturn(result);
+
+
+        suspensionService.getAllSuspensionByRut("11111111-1");
+
+    }
+
+
+
+    @Test
     public void checkDeleteExistingSuspension() throws Exception {
         Mockito.when(suspensionDao.exist(suspension1.getIdentifier()))
                 .thenReturn(true);

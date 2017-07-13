@@ -135,14 +135,14 @@ public class BorrowerServiceImplTest {
     }
 
     @Test
-    public void whenVerifyCanBarrowerByRutReturnTrueBecauseNotHaveSuspension(){
+    public void whenVerifyCanBarrowerByRutReturnTrueBecauseNotHaveSuspension() throws EmptyListException {
         Boolean resp;
         resp = borrowerService.canBorrow(borrower1.getRut(),"17-03-2017");
         assertEquals(true,resp);
     }
 
     @Test
-    public void whenVerifyCanBarrowerByRutReturnTrueBecauseHaveSuspension(){
+    public void whenVerifyCanBarrowerByRutReturnTrueBecauseHaveSuspension() throws EmptyListException {
         calendar.set(2017,03,17);
         LinkedList <Suspension> suspensions = new LinkedList<>();
         suspensions.add(suspension1);
@@ -154,7 +154,7 @@ public class BorrowerServiceImplTest {
         assertEquals(true,resp);
     }
     @Test
-    public void whenVerifyCanBarrowerByRutReturnTrueBecauseNotHaveAListSuspension(){
+    public void whenVerifyCanBarrowerByRutReturnTrueBecauseNotHaveAListSuspension() throws EmptyListException {
         LinkedList <Suspension> suspensions = new LinkedList<>();
         when(suspensionService.getAllSuspensionByRut(borrower2.getRut())).thenReturn(suspensions);
         Boolean resp;
@@ -165,7 +165,7 @@ public class BorrowerServiceImplTest {
     }
 
     @Test
-    public void whenVerifyCanBarrowerDateIsTheSameDayThatTheTermOfTheSuspensionThenReturnsTrue(){
+    public void whenVerifyCanBarrowerDateIsTheSameDayThatTheTermOfTheSuspensionThenReturnsTrue() throws EmptyListException {
         calendar.set(2017,04,05);
 
         LinkedList <Suspension> suspensions = new LinkedList<>();
@@ -178,7 +178,7 @@ public class BorrowerServiceImplTest {
         assertEquals(true,resp);
     }
     @Test
-    public void VerifyCurrentDateOutsidePenaltyPeriodReturnsTrue(){
+    public void VerifyCurrentDateOutsidePenaltyPeriodReturnsTrue() throws EmptyListException {
         LinkedList <Suspension> suspensions = new LinkedList<>();
         suspensions.add(suspension1);
         when(suspensionService.getAllSuspensionByRut(borrower2.getRut())).thenReturn(suspensions);
@@ -190,7 +190,7 @@ public class BorrowerServiceImplTest {
     }
 
     @Test
-    public void whenVerifyCurrentDateWithinPenaltyPeriodReturnsTrue(){
+    public void whenVerifyCurrentDateWithinPenaltyPeriodReturnsTrue() throws EmptyListException {
         calendar.set(2017,04,1);
         LinkedList <Suspension> suspensions = new LinkedList<>();
         suspensions.add(suspension2);

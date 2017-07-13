@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -77,8 +78,14 @@ public class SuspensionService {
         return suspensionDao.exist(id);
     }
 
-    // TODO: 7/12/2017
-    public List <Suspension> getAllSuspensionByRut(String rut) {
-        return null;
+    public List <Suspension> getAllSuspensionByRut(String rut) throws EmptyListException {
+        List<Suspension> suspensiones = getAll();
+        List<Suspension> suspensionesByRut = new LinkedList<>();
+        for (Suspension s : suspensiones){
+            if (s.getRutBorrower().equals(rut)){
+                suspensionesByRut.add(s);
+            }
+        }
+        return suspensionesByRut;
     }
 }

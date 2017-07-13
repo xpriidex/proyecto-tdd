@@ -62,8 +62,8 @@ public class LoanService {
         return filtered;
     }
 
-    public List<Loan> getAllLoansThatAreInTime(String date) {
-        List<Loan> beforeFilter = loanDao.getAll();
+    public List<Loan> getAllLoansThatAreInTime(String date) throws EmptyListException {
+        List<Loan> beforeFilter = getAll();
         List<Loan> filtered = new LinkedList<>();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for (Loan l : beforeFilter){
@@ -80,8 +80,8 @@ public class LoanService {
         return filtered;
     }
 
-    public List<Loan> getAllLoansThatHasBeenReturnedWithDelay(String date) {
-        List<Loan> all = loanDao.getAll();
+    public List<Loan> getAllLoansThatHasBeenReturnedWithDelay(String date) throws EmptyListException {
+        List<Loan> all = getAll();
         List<Loan> returnedWithDelay = new LinkedList<>();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         for(Loan l: all){
@@ -98,7 +98,6 @@ public class LoanService {
         return returnedWithDelay;
     }
 
-    // TODO: 7/5/2017 preguntar
     public void create(Loan loan) throws CreateException {
         if (loanDao.exist(loan.getIdentifier()))
             throw new CreateException();
@@ -110,9 +109,4 @@ public class LoanService {
 
         return loanDao.get(id);
     }
-
-    // TODO: 7/10/2017 update 
-
-
-
 }

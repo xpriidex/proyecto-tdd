@@ -59,7 +59,7 @@ public class BorrowerService {
         return borrowerCategoryService.get(borrowerCategory);
     }
 
-    public boolean canBorrow(String rut, String date) {
+    public boolean canBorrow(String rut, String date) throws EmptyListException {
         Boolean status;
         String finishSuspension = date;
 
@@ -151,15 +151,6 @@ public class BorrowerService {
 
         return borrowerNotHaveSuspentions;
     }
-// TODO: 10-07-2017  
-    /*public List<LoanCondition> getLoanCondition(String rut) throws ReadErrorException, EmptyListException {
-        BorrowerCategory borrowerCategory = getBorrowerCategory(rut);
-
-        if (borrowerCategory.getLoanConditions().size() == 0)
-            throw new EmptyListException();
-
-        return borrowerCategory.getLoanConditions();
-    }*/
 
     public Borrower get(String rut) throws ReadErrorException {
         if (!borrowerDao.exist(rut))
@@ -168,6 +159,5 @@ public class BorrowerService {
         return borrowerDao.get(rut);
     }
 
-    // TODO: 7/10/2017 update 
 }
  

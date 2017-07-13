@@ -17,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
@@ -101,6 +101,43 @@ public class LoanServiceTest {
         when(loanDao.getAll()).thenReturn(noLoans);
 
         loanService.getAllLoansThatStartIn("21-05-2017");
+    }
+
+    @Test
+    public void whenGetAllLoansThatAreInTime() throws EmptyListException {
+        when(loanDao.getAll()).thenReturn(loans);
+        List<Loan> resp;
+
+        resp = loanService.getAllLoansThatAreInTime("10-05-2017");
+
+        assertEquals(loans, resp);
+    }
+
+    @Test(expected = EmptyListException.class)
+    public void whenGetAllLoansThatAreInTimeIsNotExistReturnEmptyListException() throws EmptyListException{
+        when(loanDao.getAll()).thenReturn(noLoans);
+        List<Loan> resp;
+
+        resp = loanService.getAllLoansThatHasBeenReturnedWithDelay("10-05-2017");
+    }
+
+    @Test
+    public void whenGetAllLoansThatHasBeenReturnedWithDelay() throws EmptyListException {
+
+        when(loanDao.getAll()).thenReturn(loans);
+        List<Loan> resp;
+
+        resp = loanService.getAllLoansThatAreInTime("10-05-2017");
+
+        assertEquals(loans, resp);
+    }
+
+    @Test(expected = EmptyListException.class)
+    public void whenGetAllLoansThatHasBeenReturnedWithDelayIsNotExistReturnEmptyListException() throws EmptyListException{
+        when(loanDao.getAll()).thenReturn(noLoans);
+        List<Loan> resp;
+
+        resp = loanService.getAllLoansThatHasBeenReturnedWithDelay("10-05-2017");
     }
 
     @Test

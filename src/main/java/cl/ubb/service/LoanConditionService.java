@@ -55,7 +55,4 @@ public class LoanConditionService {
         return loanConditionToUpdate;
     }
 
-    // TODO: 7/10/2017 delete 
-
-
 }
